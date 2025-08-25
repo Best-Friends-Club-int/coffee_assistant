@@ -79,8 +79,8 @@ button:hover {
 
 /* картки однакової висоти */
 .gallery-item {
-  width: 120px;
-  height: 140px;              /* однакова висота */
+  width: 180px;
+  height: 220px;              /* однакова висота */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -118,15 +118,15 @@ button:hover {
 /* адаптивність */
 @media (max-width: 480px) {
   .gallery-item {
-    width: 45%;       /* 2 картки в ряд на мобільних */
+    width: calc(50% - 12px);  /* 2 картки в ряд */
     height: 200px;
   }
 
   #result .gallery-item {
-    width: 45%;
+    width: calc(50% - 12px);  /* теж 2 в ряд у результатах */
   }
 
   button {
-    width: 100%;      /* кнопка на всю ширину */
+    width: 100%;              /* кнопка на всю ширину */
   }
 }
