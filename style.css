@@ -79,8 +79,8 @@ button:hover {
 
 /* картки однакової висоти */
 .gallery-item {
-  width: 150px;
-  height: 180px;              /* однакова висота */
+  width: 120px;
+  height: 140px;              /* однакова висота */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
