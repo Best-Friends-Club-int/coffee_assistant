@@ -22,6 +22,43 @@ h3 {
   margin-top: 30px;
   margin-bottom: 15px;
 }
+/* Стартова сторінка */
+#start-screen {
+  margin-top: 40px;
+  padding: 20px;
+  background: #FFF9E5;
+  border: 2px solid #FFE389;
+  border-radius: 12px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+#start-screen p {
+  font-size: 16px;
+  line-height: 1.5;
+  color: #1C545F;
+  margin-bottom: 20px;
+}
+
+#startBtn {
+  background: #00A582;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+}
+
+#startBtn:hover {
+  background: #FFE389;
+  color: #282828;
+  transform: scale(1.05);
+}
 
 #quiz {
   margin: 20px 0;
@@ -135,6 +172,10 @@ button:hover {
   }
 
   button {
+    width: 100%;
+  }
+
+  #startBtn {
     width: 100%;
   }
 }
