@@ -207,5 +207,9 @@ async function showResult() {
   resultEl.classList.remove("hidden");
 }
 
-// старт
-document.addEventListener("DOMContentLoaded", showQuestion);
+// запуск після кліку
+startBtn.addEventListener("click", () => {
+  startScreen.classList.add("hidden");
+  quizEl.classList.remove("hidden");
+  showQuestion();
+});
