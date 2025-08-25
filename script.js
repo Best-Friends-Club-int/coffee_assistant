@@ -179,17 +179,14 @@ async function showResult() {
 
   if (shuffled.length > 0) {
     html += `<h3>✨ Вам також може сподобатися:</h3><div class="gallery">`;
-    shuffled.forEach(c => {
-      html += `
-        <div class="gallery-item" style="height: auto;">
-          <img src="${c.img}" alt="${c.name}">
-          <p>${c.name}</p>
-          <a href="${adjustLink(c.link)}" target="_blank">
-            <button>☕ Замовити</button>
-          </a>
-        </div>
-      `;
-    });
+   shuffled.forEach(c => {
+  html += `
+    <a href="${adjustLink(c.link)}" target="_blank" class="gallery-item" style="height: auto; text-decoration: none;">
+      <img src="${c.img}" alt="${c.name}">
+      <p>${c.name}</p>
+    </a>
+  `;
+});
     html += `</div>`;
   }
 
