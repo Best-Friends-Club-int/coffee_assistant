@@ -179,22 +179,21 @@ async function showResult() {
 
   if (shuffled.length > 0) {
     html += `<h3>✨ Вам також може сподобатися:</h3><div class="gallery">`;
-  if (shuffled.length > 0) {
-  html += `<h3>✨ Вам також може сподобатися:</h3><div class="gallery">`;
-  shuffled.forEach(c => {
-    html += `
-      <a href="${adjustLink(c.link)}" target="_blank" class="gallery-item">
-        <img src="${c.img}" alt="${c.name}">
-        <p>${c.name}</p>
-      </a>
-    `;
-  });
-  html += `</div>`;
-}
+    shuffled.forEach(c => {
+      html += `
+        <a href="${adjustLink(c.link)}" target="_blank" class="gallery-item">
+          <img src="${c.img}" alt="${c.name}">
+          <p>${c.name}</p>
+        </a>
+      `;
+    });
+    html += `</div>`;
+  }
 
   resultEl.innerHTML = html;
   quizEl.classList.add("hidden");
   resultEl.classList.remove("hidden");
 }
-// Запускаємо показ першого питання після завантаження сторінки
+
+// Запуск першого питання
 document.addEventListener("DOMContentLoaded", showQuestion);
