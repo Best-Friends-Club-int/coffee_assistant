@@ -1,3 +1,12 @@
+// --- Фрази для фіналу ---
+const endPhrases = [
+  "😏 Ну що, вгадали твій смак? Замов і перевір у чашці!",
+  "🎯 Схоже, ми знайшли твою ідеальну каву. Час перевірити!",
+  "☕ Тепер справа за малим — натисни і забери свій аромат.",
+  "😉 А може ризикнеш і спробуєш саме цю?",
+  "✨ Відчуй, чи справді це твоя кава — замов просто зараз!"
+];
+
 // --- Питання + відповіді + теги ---
 const questions = [
   {
@@ -78,7 +87,7 @@ const coffeeProfiles = {
     desc: "Класика з шоколадом і горіхами — кава для затишку і стабільності 🍫",
     coffees: [
       { name: "Brazil Mogiana", link: "https://bfc24.com/uk/store/product/33", img: "images/brazil_mogiana.png" },
-      { name: "Colombia Excelso", link: "https://bfc24.com/uk/store/product/35", img: "images/colombia_excleso.png" }
+      { name: "Colombia Excelso", link: "https://bfc24.com/uk/store/product/35", img: "images/colombia_excelso.png" }
     ]
   },
   dessert: {
@@ -103,14 +112,7 @@ const coffeeProfiles = {
     ]
   }
 };
-// --- Фрази для фіналу ---
-const endPhrases = [
-  "😏 Ну що, вгадали твій смак? Замов і перевір у чашці!",
-  "🎯 Схоже, ми знайшли твою ідеальну каву. Час перевірити!",
-  "☕ Тепер справа за малим — натисни і забери свій аромат.",
-  "😉 А може ризикнеш і спробуєш саме цю?",
-  "✨ Відчуй, чи справді це твоя кава — замов просто зараз!"
-];
+
 // --- Логіка ---
 let currentQ = 0;
 let scores = { fruit: 0, choco: 0, dessert: 0, dark: 0, classic: 0 };
@@ -118,17 +120,18 @@ let scores = { fruit: 0, choco: 0, dessert: 0, dark: 0, classic: 0 };
 const quizEl = document.getElementById("quiz");
 const resultEl = document.getElementById("result");
 
-// API ipapi для визначення країни
+// визначення країни
 async function getUserCountry() {
   try {
     const res = await fetch("https://ipapi.co/json/");
     const data = await res.json();
-    return data.country_code; // UA, PL, DE, ...
+    return data.country_code;
   } catch {
-    return "UA"; // дефолт
+    return "UA";
   }
 }
 
+// показ питання
 function showQuestion() {
   quizEl.innerHTML = `<h2>${questions[currentQ].text}</h2>`;
   const gallery = document.createElement("div");
@@ -153,6 +156,7 @@ function showQuestion() {
   quizEl.appendChild(gallery);
 }
 
+// показ результату
 async function showResult() {
   const winner = Object.keys(scores).reduce((a, b) =>
     scores[a] > scores[b] ? a : b
@@ -160,32 +164,20 @@ async function showResult() {
   const coffeeSet = coffeeProfiles[winner];
   const coffee = coffeeSet.coffees[Math.floor(Math.random() * coffeeSet.coffees.length)];
 
-  // визначаємо країну
   const country = await getUserCountry();
   const adjustLink = (link) => country === "UA" ? link : link.replace("/uk", "");
 
-  // основна кава
+  const phrase = endPhrases[Math.floor(Math.random() * endPhrases.length)];
+
   let html = `
     <h2>Ваша кава — ${coffee.name}</h2>
     <img src="${coffee.img}" alt="${coffee.name}">
     <p>${coffeeSet.desc}</p>
+    <div class="final-phrase">${phrase}</div>
     <a href="${adjustLink(coffee.link)}" target="_blank">
       <button>☕ Замовити</button>
     </a>
   `;
-  // обираємо рандомну фразу
-const phrase = endPhrases[Math.floor(Math.random() * endPhrases.length)];
-
-// основна кава
-let html = `
-  <h2>Ваша кава — ${coffee.name}</h2>
-  <img src="${coffee.img}" alt="${coffee.name}">
-  <p>${coffeeSet.desc}</p>
-  <div class="final-phrase">${phrase}</div>
-  <a href="${adjustLink(coffee.link)}" target="_blank">
-    <button>☕ Замовити</button>
-  </a>
-`;
 
   // додаткові 2 варіанти
   let otherCoffees = [];
@@ -215,5 +207,5 @@ let html = `
   resultEl.classList.remove("hidden");
 }
 
-// Запуск першого питання
+// старт
 document.addEventListener("DOMContentLoaded", showQuestion);
