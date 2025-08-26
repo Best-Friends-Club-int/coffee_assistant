@@ -1,5 +1,5 @@
 body {
-  font-family: 'Inter', Arial, sans-serif; /* базовий для тексту */
+  font-family: 'Inter', Arial, sans-serif;
   text-align: center;
   background: #F5FFF9;
   color: #282828;
@@ -8,30 +8,29 @@ body {
   font-weight: 400;
 }
 
-h1, h2, h3, button {
-  font-family: 'Geologica', Arial, sans-serif; /* акценти */
-}
-
 h1 {
+  font-family: 'Geologica', Arial, sans-serif;
   font-weight: 700;
   color: #00A582;
   margin-bottom: 20px;
 }
 
 h2 {
+  font-family: 'Geologica', Arial, sans-serif;
   font-weight: 600;
   color: #1C545F;
   margin-bottom: 15px;
 }
 
 h3 {
+  font-family: 'Geologica', Arial, sans-serif;
   font-weight: 600;
   color: #1C545F;
   margin-top: 30px;
   margin-bottom: 15px;
 }
 
-/* Стартова сторінка */
+/* --- Стартова сторінка --- */
 #start-screen {
   margin-top: 40px;
   padding: 20px;
@@ -42,22 +41,22 @@ h3 {
   margin-left: auto;
   margin-right: auto;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
 }
 
 #start-screen h2 {
-  color: #1C545F;
   margin-bottom: 20px;
 }
 
 #start-screen p {
-  font-family: 'Inter', Arial, sans-serif;
   font-size: 16px;
   line-height: 1.6;
-  color: #282828;
   margin-bottom: 20px;
+  text-align: center;
 }
 
 #startBtn {
+  font-family: 'Geologica', Arial, sans-serif;
   font-weight: 600;
   background: #00A582;
   color: #fff;
@@ -66,6 +65,7 @@ h3 {
   border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
+  min-width: 200px;
   transition: background 0.3s, transform 0.2s;
 }
 
@@ -75,7 +75,7 @@ h3 {
   transform: scale(1.05);
 }
 
-/* Квіз */
+/* --- Квіз --- */
 #quiz {
   margin: 20px 0;
 }
@@ -84,7 +84,7 @@ h3 {
   display: none;
 }
 
-/* Результат */
+/* --- Результат --- */
 #result {
   margin-top: 20px;
   padding: 20px;
@@ -102,6 +102,7 @@ h3 {
 
 /* кнопки */
 button {
+  font-family: 'Geologica', Arial, sans-serif;
   font-weight: 600;
   background: #00A582;
   color: #fff;
@@ -120,7 +121,7 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* Галерея */
+/* --- Галерея варіантів --- */
 .gallery {
   display: flex;
   justify-content: center;
@@ -132,9 +133,9 @@ button:hover {
 }
 
 .gallery-item {
-  flex: 1 1 calc(25% - 16px);
-  max-width: 120px;
-  height: 160px;
+  flex: 1 1 calc(25% - 16px);  /* по замовчуванню 4 в ряд */
+  max-width: 220px;
+  height: 220px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -156,7 +157,7 @@ button:hover {
 
 .gallery-item img {
   width: 100%;
-  height: 110px;
+  height: 120px;
   object-fit: cover;
   border-radius: 6px;
   margin-bottom: 8px;
@@ -169,7 +170,7 @@ button:hover {
   font-family: 'Inter', Arial, sans-serif;
 }
 
-/* Фінальна фраза */
+/* --- Фінальна фраза --- */
 .final-phrase {
   margin: 15px auto;
   padding: 12px 16px;
@@ -183,32 +184,20 @@ button:hover {
   animation: fadeIn 0.6s ease;
 }
 
-/* Анімація */
+/* --- Анімація --- */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* Адаптивність */
-@media (max-width: 900px) {
-  .gallery-item {
-    flex: 1 1 calc(33.333% - 16px);
-  }
-}
-
-@media (max-width: 600px) {
+/* --- Адаптивність --- */
+/* телефони — завжди 2 в ряд */
+@media (max-width: 768px) {
   .gallery-item {
     flex: 1 1 calc(50% - 16px);
+    max-width: none;
   }
-}
 
-@media (max-width: 400px) {
-  .gallery-item {
-    flex: 1 1 100%;
-  }
-}
-
-@media (max-width: 480px) {
   button, #startBtn {
     width: 100%;
   }
