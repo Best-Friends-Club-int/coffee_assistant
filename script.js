@@ -2,7 +2,7 @@
 const endPhrases = [
   "😏 Ну що, вгадали твій смак? Замов і перевір у чашці!",
   "🎯 Схоже, ми знайшли твою ідеальну каву. Час перевірити!",
-  "☕ Тепер справа за малим — натисни і забери свою кавову пару.",
+  "☕ Тепер справа за малим — натисни і забери своб кавову пару.",
   "😉 А може ризикнеш і спробуєш саме цю?",
   "✨ Відчуй, чи справді це твоя кава — замов просто зараз!"
 ];
@@ -66,10 +66,10 @@ const questions = [
   {
     text: "🫖 Який метод заварювання тобі ближче?",
     answers: [
-      { text: "Фільтр (V60, Chemex)", tag: "fruit", img: "images/brew_filter.png" },
-      { text: "Еспресо-машина", tag: "choco", img: "images/brew_espresso.png" },
-      { text: "Гейзерна (Moka pot)", tag: "dark", img: "images/brew_moka.png" },
-      { text: "Френч Прес, Чашка", tag: "dessert", img: "images/brew_turkish.png" }
+      { text: "Фільтр (V60, Chemex)", tag: "fruit", img: "images/brew_filter.png", method: "filter" },
+      { text: "Еспресо-машина", tag: "choco", img: "images/brew_espresso.png", method: "espresso" },
+      { text: "Гейзерна (Moka pot)", tag: "dark", img: "images/brew_moka.png", method: "moka" },
+      { text: "Френч Прес, Чашка", tag: "dessert", img: "images/brew_turkish.png", method: "immersion" }
     ]
   }
 ];
@@ -79,36 +79,36 @@ const coffeeProfiles = {
   fruit: {
     desc: "Яскраві, фруктові, квіткові — для тих, хто любить кислинку й життя у кольорі 🌸",
     coffees: [
-      { name: "Ethiopia Gedeb", link: "https://bfc24.com/uk/store/product/43", img: "images/ethiopia_gadeb.png" },
-      { name: "Kenya AA Gikanda Kangocho", link: "https://bfc24.com/uk/store/product/39", img: "images/kenya_aa.png" }
+      { name: "Ethiopia Gedeb", link: "https://bfc24.com/uk/store/product/43", img: "images/ethiopia_gadeb.png", method: ["filter"] },
+      { name: "Kenya AA Gikanda Kangocho", link: "https://bfc24.com/uk/store/product/39", img: "images/kenya_aa.png", method: ["filter"] }
     ]
   },
   choco: {
     desc: "Класика з шоколадом і горіхами — кава для затишку і стабільності 🍫",
     coffees: [
-      { name: "Brazil Mogiana", link: "https://bfc24.com/uk/store/product/33", img: "images/brazil_mogiana.png" },
-      { name: "Colombia Excelso", link: "https://bfc24.com/uk/store/product/35", img: "images/colombia_excleso.png" }
+      { name: "Brazil Mogiana", link: "https://bfc24.com/uk/store/product/33", img: "images/brazil_mogiana.png", method: ["espresso", "moka"] },
+      { name: "Colombia Excelso", link: "https://bfc24.com/uk/store/product/35", img: "images/colombia_excleso.png", method: ["espresso", "filter"] }
     ]
   },
   dessert: {
     desc: "Нуга, карамель, солодкий десерт у чашці 🍯",
     coffees: [
-      { name: "Arabica Midday", link: "https://bfc24.com/uk/store/product/45", img: "images/midday.png" },
-      { name: "Arabica Midnight", link: "https://bfc24.com/uk/store/product/31", img: "images/midnight.png" },
-      { name: "Arabica Sunrise", link: "https://bfc24.com/uk/store/product/36", img: "images/sunrise.png" }
+      { name: "Arabica Midday", link: "https://bfc24.com/uk/store/product/45", img: "images/midday.png", method: ["espresso", "moka"] },
+      { name: "Arabica Midnight", link: "https://bfc24.com/uk/store/product/31", img: "images/midnight.png", method: ["filter", "espresso"] },
+      { name: "Arabica Sunrise", link: "https://bfc24.com/uk/store/product/36", img: "images/sunrise.png", method: ["immersion", "filter"] }
     ]
   },
   dark: {
     desc: "Насичена, темна, гірка як життя у понеділок ☠️",
     coffees: [
-      { name: "Arabusta Dark", link: "https://bfc24.com/uk/store/product/29", img: "images/dark.png" },
-      { name: "Arabusta Amber", link: "https://bfc24.com/uk/store/product/30", img: "images/amber.png" }
+      { name: "Arabusta Dark", link: "https://bfc24.com/uk/store/product/29", img: "images/dark.png", method: ["espresso", "moka"] },
+      { name: "Arabusta Amber", link: "https://bfc24.com/uk/store/product/30", img: "images/amber.png", method: ["espresso", "moka"] }
     ]
   },
   classic: {
     desc: "Той самий смак, але без кофеїну 🌙",
     coffees: [
-      { name: "Decaf Colombia Huila", link: "https://bfc24.com/uk/store/product/34", img: "images/columbia_decaf.png" }
+      { name: "Decaf Colombia Huila", link: "https://bfc24.com/uk/store/product/34", img: "images/columbia_decaf.png", method: ["filter", "espresso", "immersion"] }
     ]
   }
 };
@@ -116,9 +116,12 @@ const coffeeProfiles = {
 // --- Логіка ---
 let currentQ = 0;
 let scores = { fruit: 0, choco: 0, dessert: 0, dark: 0, classic: 0 };
+let selectedMethod = null;
 
 const quizEl = document.getElementById("quiz");
 const resultEl = document.getElementById("result");
+const startScreen = document.getElementById("start-screen");
+const startBtn = document.getElementById("startBtn");
 
 // визначення країни
 async function getUserCountry() {
@@ -143,6 +146,9 @@ function showQuestion() {
     card.innerHTML = `<img src="${a.img}" alt="${a.text}"><p>${a.text}</p>`;
     card.onclick = () => {
       scores[a.tag]++;
+      if (a.method) {
+        selectedMethod = a.method;
+      }
       currentQ++;
       if (currentQ < questions.length) {
         showQuestion();
@@ -162,7 +168,17 @@ async function showResult() {
     scores[a] > scores[b] ? a : b
   );
   const coffeeSet = coffeeProfiles[winner];
-  const coffee = coffeeSet.coffees[Math.floor(Math.random() * coffeeSet.coffees.length)];
+
+  // фільтр по методу
+  let filteredCoffees = coffeeSet.coffees;
+  if (selectedMethod) {
+    filteredCoffees = coffeeSet.coffees.filter(c => c.method.includes(selectedMethod));
+  }
+  if (filteredCoffees.length === 0) {
+    filteredCoffees = coffeeSet.coffees;
+  }
+
+  const coffee = filteredCoffees[Math.floor(Math.random() * filteredCoffees.length)];
 
   const country = await getUserCountry();
   const adjustLink = (link) => country === "UA" ? link : link.replace("/uk", "");
@@ -179,12 +195,14 @@ async function showResult() {
     </a>
   `;
 
-  // додаткові 2 варіанти
+  // додаткові варіанти
   let otherCoffees = [];
   Object.keys(coffeeProfiles).forEach(key => {
-    if (key !== winner) {
-      otherCoffees = otherCoffees.concat(coffeeProfiles[key].coffees);
-    }
+    coffeeProfiles[key].coffees.forEach(c => {
+      if (key !== winner && (!selectedMethod || c.method.includes(selectedMethod))) {
+        otherCoffees.push(c);
+      }
+    });
   });
 
   const shuffled = otherCoffees.sort(() => 0.5 - Math.random()).slice(0, 2);
