@@ -1,23 +1,27 @@
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Geologica', Arial, sans-serif;
   text-align: center;
   background: #F5FFF9;
   color: #282828;
   margin: 0;
   padding: 20px;
+  font-weight: 400; /* звичайний текст */
 }
 
 h1 {
+  font-weight: 700;
   color: #00A582;
   margin-bottom: 20px;
 }
 
 h2 {
+  font-weight: 600;
   color: #1C545F;
   margin-bottom: 15px;
 }
 
 h3 {
+  font-weight: 600;
   color: #1C545F;
   margin-top: 30px;
   margin-bottom: 15px;
@@ -49,6 +53,8 @@ h3 {
 }
 
 #startBtn {
+  font-family: 'Geologica', Arial, sans-serif;
+  font-weight: 600;
   background: #00A582;
   color: #fff;
   border: none;
@@ -56,7 +62,6 @@ h3 {
   border-radius: 8px;
   cursor: pointer;
   font-size: 16px;
-  font-weight: 600;
   transition: background 0.3s, transform 0.2s;
 }
 
@@ -91,8 +96,10 @@ h3 {
   display: block;
 }
 
-/* кнопка результату */
+/* кнопки */
 button {
+  font-family: 'Geologica', Arial, sans-serif;
+  font-weight: 600;
   background: #00A582;
   color: #fff;
   border: none;
@@ -102,7 +109,6 @@ button {
   cursor: pointer;
   transition: background 0.3s, transform 0.2s;
   font-size: 14px;
-  font-weight: 600;
 }
 
 button:hover {
@@ -115,7 +121,7 @@ button:hover {
 .gallery {
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 16px;
   flex-wrap: wrap;
   padding: 0;
@@ -123,8 +129,9 @@ button:hover {
 }
 
 .gallery-item {
-  width: 130px;
-  height: 160px;   /* однакова висота */
+  flex: 1 1 calc(25% - 16px);
+  max-width: 200px;
+  height: 220px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -146,7 +153,7 @@ button:hover {
 
 .gallery-item img {
   width: 100%;
-  height: 120px;   /* однакова висота картинки */
+  height: 120px;
   object-fit: cover;
   border-radius: 6px;
   margin-bottom: 8px;
@@ -180,16 +187,25 @@ button:hover {
 }
 
 /* --- Адаптивність --- */
-@media (max-width: 480px) {
+@media (max-width: 900px) {
   .gallery-item {
-    width: calc(50% - 12px);
-    height: 200px;
+    flex: 1 1 calc(33.333% - 16px);
   }
+}
 
-  #result .gallery-item {
-    width: calc(50% - 12px);
+@media (max-width: 600px) {
+  .gallery-item {
+    flex: 1 1 calc(50% - 16px);
   }
+}
 
+@media (max-width: 400px) {
+  .gallery-item {
+    flex: 1 1 100%;
+  }
+}
+
+@media (max-width: 480px) {
   button, #startBtn {
     width: 100%;
   }
