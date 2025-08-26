@@ -52,7 +52,6 @@ h3 {
   font-size: 16px;
   line-height: 1.6;
   margin-bottom: 20px;
-  text-align: center;
 }
 
 #startBtn {
@@ -123,18 +122,13 @@ button:hover {
 
 /* --- Галерея варіантів --- */
 .gallery {
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 на десктопі */
   gap: 16px;
-  flex-wrap: wrap;
-  padding: 0;
   margin-top: 15px;
 }
 
 .gallery-item {
-  flex: 1 1 calc(25% - 16px);  /* по замовчуванню 4 в ряд */
-  max-width: 220px;
   height: 220px;
   display: flex;
   flex-direction: column;
@@ -191,11 +185,10 @@ button:hover {
 }
 
 /* --- Адаптивність --- */
-/* телефони — завжди 2 в ряд */
+/* телефони та планшети — завжди 2 в ряд */
 @media (max-width: 768px) {
-  .gallery-item {
-    flex: 1 1 calc(50% - 16px);
-    max-width: none;
+  .gallery {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   button, #startBtn {
