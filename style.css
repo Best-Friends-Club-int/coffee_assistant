@@ -54,6 +54,11 @@ h3 {
   margin-bottom: 20px;
 }
 
+#start-screen .btn-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 #startBtn {
   font-family: 'Geologica', Arial, sans-serif;
   font-weight: 600;
@@ -90,6 +95,11 @@ h3 {
   border-radius: 12px;
   background: #fff;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+#result h2 {
+  margin-bottom: 15px;
 }
 
 #result img {
@@ -97,6 +107,22 @@ h3 {
   border-radius: 8px;
   margin: 15px auto;
   display: block;
+}
+
+#result p {
+  margin-bottom: 15px;
+}
+
+#result a {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+}
+
+#result button {
+  display: inline-block;
+  min-width: 200px;
+  margin: 12px auto;
 }
 
 /* кнопки */
@@ -107,7 +133,6 @@ button {
   color: #fff;
   border: none;
   padding: 12px 20px;
-  margin: 8px;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s, transform 0.2s;
@@ -123,7 +148,7 @@ button:hover {
 /* --- Галерея варіантів --- */
 .gallery {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 на десктопі */
+  grid-template-columns: repeat(4, 1fr); /* 4 в ряд на десктопі */
   gap: 16px;
   margin-top: 15px;
 }
