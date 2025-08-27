@@ -96,7 +96,7 @@ const coffeeProfiles = {
     desc: "Класика з шоколадом і горіхами 🍫",
     coffees: [
       { name: "Brazil Mogiana", link: "https://bfc24.com/uk/store/product/33", img: "images/brazil_mogiana.png", method: ["espresso","moka"], drinks: ["espresso","americano","milk","cappuccino"] },
-      { name: "Colombia Excelso", link: "https://bfc24.com/uk/store/product/35", img: "images/colombia_excelso.png", method: ["espresso","filter"], drinks: ["espresso","americano","milk"] }
+      { name: "Colombia Excelso", link: "https://bfc24.com/uk/store/product/35", img: "images/colombia_excleso.png", method: ["espresso","filter"], drinks: ["espresso","americano","milk"] }
     ]
   },
   dessert: {
