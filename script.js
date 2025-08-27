@@ -118,7 +118,7 @@ const coffeeProfiles = {
       { 
         name: "Colombia Excelso 250g",
         link: "https://bfc24.com/uk/store/product/35",
-        img: "images/colombia_excelso.png",
+        img: "images/colombia_excleso.png",
         method: ["espresso","immersion"],
         drinks: ["espresso","americano"],
         desc: "Шоколад, горіх і цитрусова свіжість. Баланс для еспресо, та френч пресу. Помел: середньо-дрібний."
