@@ -119,9 +119,9 @@ const coffeeProfiles = {
         name: "Colombia Excelso 250g",
         link: "https://bfc24.com/uk/store/product/35",
         img: "images/colombia_excelso.png",
-        method: ["espresso","filter"],
-        drinks: ["espresso","americano","milk"],
-        desc: "Шоколад, горіх і цитрусова свіжість. Баланс для еспресо і фільтру. Помел: середньо-дрібний."
+        method: ["espresso","immersion"],
+        drinks: ["espresso","americano"],
+        desc: "Шоколад, горіх і цитрусова свіжість. Баланс для еспресо, та френч пресу. Помел: середньо-дрібний."
       }
     ]
   },
@@ -132,22 +132,22 @@ const coffeeProfiles = {
         link: "https://bfc24.com/uk/store/product/45",
         img: "images/midday.png",
         method: ["espresso","moka"],
-        drinks: ["espresso","americano","milk","cappuccino"],
-        desc: "Нуга, шоколад і легка карамель. Чудова для капучино. Помел: дрібний."
+        drinks: ["espresso","milk","cappuccino"],
+        desc: "Нуга, шоколад і легка карамель. Чудова для капучино та кави з молоком. Помел: дрібний."
       },
       { 
         name: "Arabica Midnight 250g",
         link: "https://bfc24.com/uk/store/product/31",
         img: "images/midnight.png",
-        method: ["filter","espresso"],
+        method: ["moka","espresso"],
         drinks: ["espresso","americano"],
-        desc: "Мандарин, молочний шоколад і мигдаль. Яскрава у фільтрі. Помел: середній."
+        desc: "Мандарин, молочний шоколад і мигдаль. Якраз для еспрессо. Помел: середній."
       },
       { 
         name: "Arabica Sunrise 250g",
         link: "https://bfc24.com/uk/store/product/36",
         img: "images/sunrise.png",
-        method: ["immersion","filter"],
+        method: ["immersion","espresso"],
         drinks: ["americano","milk"],
         desc: "Абрикос, чорнослив і темний шоколад. Розкривається у френч-пресі. Помел: грубий."
       }
@@ -169,7 +169,7 @@ const coffeeProfiles = {
         img: "images/amber.png",
         method: ["espresso","moka"],
         drinks: ["espresso","americano","milk","cappuccino"],
-        desc: "М’яке какао, горіхи й солодкий післясмак. Гарна база для капучино. Помел: дрібний."
+        desc: "М’яке какао, горіхи й солодкий післясмак. Гарна як для еспресо, так і база для капучино. Помел: дрібний."
       }
     ]
   },
@@ -179,7 +179,7 @@ const coffeeProfiles = {
         name: "Decaf Colombia Huila 250g",
         link: "https://bfc24.com/uk/store/product/34",
         img: "images/columbia_decaf.png",
-        method: ["espresso","filter","immersion"],
+        method: ["espresso","immersion"],
         drinks: ["espresso","americano","milk","cappuccino"],
         desc: "Шоколад і горіхи без кофеїну. Ідеальна вечірня кава. Помел: середній."
       }
@@ -253,25 +253,30 @@ function showResult() {
     </a>
   `;
 
-  // --- Додаткові рекомендації ---
-  let otherCoffees = [];
-  Object.keys(coffeeProfiles).forEach(key => {
-    if (key !== winner) {
-      coffeeProfiles[key].coffees.forEach(c => {
-        if (!selectedMethod || c.method.includes(selectedMethod)) {
-          if (selectedDrink === "milk" || selectedDrink === "cappuccino") {
-            if (c.drinks.includes(selectedDrink)) otherCoffees.push(c);
-          } else {
-            if (!c.drinks.includes("milk") && !c.drinks.includes("cappuccino")) {
-              otherCoffees.unshift(c);
-            } else {
-              otherCoffees.push(c);
-            }
-          }
+ // --- Додаткові рекомендації ---
+let otherCoffees = [];
+Object.keys(coffeeProfiles).forEach(key => {
+  if (key !== winner) {
+    coffeeProfiles[key].coffees.forEach(c => {
+      // суворий фільтр по методу
+      if (selectedMethod && !c.method.includes(selectedMethod)) return;
+
+      // якщо обрано milk/cappuccino → беремо тільки ці
+      if (selectedDrink === "milk" || selectedDrink === "cappuccino") {
+        if (c.drinks.includes(selectedDrink)) {
+          otherCoffees.push(c);
         }
-      });
-    }
-  });
+      } else {
+        // якщо НЕ молочний → віддавати перевагу немолочним
+        if (!c.drinks.includes("milk") && !c.drinks.includes("cappuccino")) {
+          otherCoffees.unshift(c);
+        } else {
+          otherCoffees.push(c);
+        }
+      }
+    });
+  }
+});
 
   const shuffled = otherCoffees.sort(() => 0.5 - Math.random()).slice(0, 2);
 
