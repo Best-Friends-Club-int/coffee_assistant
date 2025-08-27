@@ -7,7 +7,7 @@ const endPhrases = [
   "✨ Відчуй, чи справді це твоя кава — замов просто зараз!"
 ];
 
-// --- Питання + відповіді + теги ---
+// --- Питання ---
 const questions = [
   {
     text: "🍰 Улюблений десерт дитинства?",
@@ -83,7 +83,7 @@ const questions = [
   }
 ];
 
-// --- Профілі кави (оновлені з методами + напоями) ---
+// --- Профілі кави (з method + drinks) ---
 const coffeeProfiles = {
   fruit: {
     desc: "Яскраві, фруктові, квіткові — для тих, хто любить кислинку 🌸",
@@ -163,12 +163,13 @@ function showQuestion() {
 
 // показ результату
 function showResult() {
+  // 1. визначаємо категорію-переможця
   const winner = Object.keys(scores).reduce((a, b) =>
     scores[a] > scores[b] ? a : b
   );
   const coffeeSet = coffeeProfiles[winner];
 
-  // фільтр по методу і напою
+  // 2. фільтруємо кави за методом і напоєм
   let filteredCoffees = coffeeSet.coffees;
   if (selectedMethod) {
     filteredCoffees = filteredCoffees.filter(c => c.method.includes(selectedMethod));
@@ -180,6 +181,7 @@ function showResult() {
     filteredCoffees = coffeeSet.coffees;
   }
 
+  // 3. основна кава
   const coffee = filteredCoffees[Math.floor(Math.random() * filteredCoffees.length)];
   const phrase = endPhrases[Math.floor(Math.random() * endPhrases.length)];
 
@@ -193,6 +195,37 @@ function showResult() {
     </a>
   `;
 
+  // 4. додаткові рекомендації
+  let otherCoffees = [];
+  Object.keys(coffeeProfiles).forEach(key => {
+    coffeeProfiles[key].coffees.forEach(c => {
+      if (
+        key !== winner &&
+        (!selectedMethod || c.method.includes(selectedMethod)) &&
+        (!selectedDrink || c.drinks.includes(selectedDrink))
+      ) {
+        otherCoffees.push(c);
+      }
+    });
+  });
+
+  const recCount = selectedMethod === "filter" ? 1 : 2;
+  const shuffled = otherCoffees.sort(() => 0.5 - Math.random()).slice(0, recCount);
+
+  if (shuffled.length > 0) {
+    html += `<h3>✨ Вам також може сподобатися:</h3><div class="gallery">`;
+    shuffled.forEach(c => {
+      html += `
+        <a href="${c.link}" target="_blank" class="gallery-item">
+          <img src="${c.img}" alt="${c.name}">
+          <p>${c.name}</p>
+        </a>
+      `;
+    });
+    html += `</div>`;
+  }
+
+  // 5. показуємо результат
   resultEl.innerHTML = html;
   quizEl.classList.add("hidden");
   resultEl.classList.remove("hidden");
