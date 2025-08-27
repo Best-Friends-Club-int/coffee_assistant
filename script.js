@@ -83,105 +83,105 @@ const questions = [
   }
 ];
 
-// --- Профілі кави з індивідуальними описами ---
+// --- Профілі кави з описами ---
 const coffeeProfiles = {
   fruit: {
     coffees: [
       { 
-        name: "Ethiopia Gedeb 250g", 
-        link: "https://bfc24.com/uk/store/product/43", 
-        img: "images/ethiopia_gadeb.png", 
-        method: ["filter"], 
-        drinks: ["americano"], 
-        desc: "Соковита ягідність чорниці, відтінки Earl Grey та гречаного меду. Ідеальна для фільтру — середній помел." 
+        name: "Ethiopia Gedeb 250g",
+        link: "https://bfc24.com/uk/store/product/43",
+        img: "images/ethiopia_gadeb.png",
+        method: ["filter"],
+        drinks: ["americano"],
+        desc: "Соковиті ягоди чорниці, Earl Grey і медовий шлейф. Ідеальна для фільтру. Помел: середній."
       },
       { 
-        name: "Kenya AA Gikanda Kangocho 250g", 
-        link: "https://bfc24.com/uk/store/product/39", 
-        img: "images/kenya_aa.png", 
-        method: ["filter"], 
-        drinks: ["espresso","americano"], 
-        desc: "Яскрава кислотність смородини, легкі квіткові ноти та карамельний післясмак. Краще розкривається у V60, середній-помел." 
+        name: "Kenya AA Gikanda Kangocho 250g",
+        link: "https://bfc24.com/uk/store/product/39",
+        img: "images/kenya_aa.png",
+        method: ["filter"],
+        drinks: ["espresso","americano"],
+        desc: "Чорна смородина, квіткові ноти й карамельний післясмак. Найкраще у V60. Помел: середній."
       }
     ]
   },
   choco: {
     coffees: [
       { 
-        name: "Brazil Mogiana 250g", 
-        link: "https://bfc24.com/uk/store/product/33", 
-        img: "images/brazil_mogiana.png", 
-        method: ["espresso","moka"], 
-        drinks: ["espresso","americano","milk","cappuccino"], 
-        desc: "Молочний шоколад у поєднанні з волоським горіхом та нотками печива. Ідеальна для еспресо та кави з молоком, дрібний помел." 
+        name: "Brazil Mogiana 250g",
+        link: "https://bfc24.com/uk/store/product/33",
+        img: "images/brazil_mogiana.png",
+        method: ["espresso","moka"],
+        drinks: ["espresso","americano","milk","cappuccino"],
+        desc: "Молочний шоколад, горіхи та відтінки печива. Ідеальна для еспресо й молочних напоїв. Помел: дрібний."
       },
       { 
-        name: "Colombia Excelso 250g", 
-        link: "https://bfc24.com/uk/store/product/35", 
-        img: "images/colombia_excleso.png", 
-        method: ["espresso","filter"], 
-        drinks: ["espresso","americano","milk"], 
-        desc: "Збалансована кава з шоколадно-горіховим смаком і цитрусовою свіжістю. Підійде і для еспресо, і для фільтру, середньо-дрібний помел." 
+        name: "Colombia Excelso 250g",
+        link: "https://bfc24.com/uk/store/product/35",
+        img: "images/colombia_excelso.png",
+        method: ["espresso","filter"],
+        drinks: ["espresso","americano","milk"],
+        desc: "Шоколад, горіх і цитрусова свіжість. Баланс для еспресо і фільтру. Помел: середньо-дрібний."
       }
     ]
   },
   dessert: {
     coffees: [
       { 
-        name: "Arabica Midday 250g", 
-        link: "https://bfc24.com/uk/store/product/45", 
-        img: "images/midday.png", 
-        method: ["espresso","moka"], 
-        drinks: ["espresso","americano","milk","cappuccino"], 
-        desc: "Ніжні ноти нуги та шоколаду, легкий карамельний акцент. Смакує в еспресо і капучино. Рекомендований дрібний помел." 
+        name: "Arabica Midday 250g",
+        link: "https://bfc24.com/uk/store/product/45",
+        img: "images/midday.png",
+        method: ["espresso","moka"],
+        drinks: ["espresso","americano","milk","cappuccino"],
+        desc: "Нуга, шоколад і легка карамель. Чудова для капучино. Помел: дрібний."
       },
       { 
-        name: "Arabica Midnight 250g", 
-        link: "https://bfc24.com/uk/store/product/31", 
-        img: "images/midnight.png", 
-        method: ["filter","espresso"], 
-        drinks: ["espresso","americano"], 
-        desc: "Яскравий мандариновий сік у парі з молочним шоколадом і мигдалем. Найкраще у фільтрі — середній помел." 
+        name: "Arabica Midnight 250g",
+        link: "https://bfc24.com/uk/store/product/31",
+        img: "images/midnight.png",
+        method: ["filter","espresso"],
+        drinks: ["espresso","americano"],
+        desc: "Мандарин, молочний шоколад і мигдаль. Яскрава у фільтрі. Помел: середній."
       },
       { 
-        name: "Arabica Sunrise 250g", 
-        link: "https://bfc24.com/uk/store/product/36", 
-        img: "images/sunrise.png", 
-        method: ["immersion","filter"], 
-        drinks: ["americano","milk"], 
-        desc: "Фруктова гра абрикоса, чорносливу й темного шоколаду. В імерсійних методах (French Press) розкривається повністю, грубий помел." 
+        name: "Arabica Sunrise 250g",
+        link: "https://bfc24.com/uk/store/product/36",
+        img: "images/sunrise.png",
+        method: ["immersion","filter"],
+        drinks: ["americano","milk"],
+        desc: "Абрикос, чорнослив і темний шоколад. Розкривається у френч-пресі. Помел: грубий."
       }
     ]
   },
   dark: {
     coffees: [
       { 
-        name: "Arabusta Dark (Blend) 250g", 
-        link: "https://bfc24.com/uk/store/product/29", 
-        img: "images/dark.png", 
-        method: ["espresso","moka"], 
-        drinks: ["espresso","americano","milk","cappuccino"], 
-        desc: "Насичений шоколадно-горіховий профіль з гірчинкою. Ідеальний для густих еспресо та кави з молоком, дрібний помел." 
+        name: "Arabusta Dark 250g",
+        link: "https://bfc24.com/uk/store/product/29",
+        img: "images/dark.png",
+        method: ["espresso","moka"],
+        drinks: ["espresso","americano","milk","cappuccino"],
+        desc: "Насичений шоколадно-горіховий смак із гірчинкою. Чудовий для еспресо та латте. Помел: дрібний."
       },
       { 
-        name: "Arabusta Amber (Blend) 250g", 
-        link: "https://bfc24.com/uk/store/product/30", 
-        img: "images/amber.png", 
-        method: ["espresso","moka"], 
-        drinks: ["espresso","americano","milk","cappuccino"], 
-        desc: "М’які відтінки какао та горіхів із довгим солодкуватим післясмаком. Чудова база для капучино. Дрібний помел." 
+        name: "Arabusta Amber 250g",
+        link: "https://bfc24.com/uk/store/product/30",
+        img: "images/amber.png",
+        method: ["espresso","moka"],
+        drinks: ["espresso","americano","milk","cappuccino"],
+        desc: "М’яке какао, горіхи й солодкий післясмак. Гарна база для капучино. Помел: дрібний."
       }
     ]
   },
   classic: {
     coffees: [
       { 
-        name: "Decaf Colombia Huila 250g", 
-        link: "https://bfc24.com/uk/store/product/34", 
-        img: "images/columbia_decaf.png", 
-        method: ["espresso","filter","immersion"], 
-        drinks: ["espresso","americano","milk","cappuccino"], 
-        desc: "Той самий смак шоколаду й горіхів, але без кофеїну. Добрий вибір для вечірньої чашки. Підходить для всіх методів, середній помел." 
+        name: "Decaf Colombia Huila 250g",
+        link: "https://bfc24.com/uk/store/product/34",
+        img: "images/columbia_decaf.png",
+        method: ["espresso","filter","immersion"],
+        drinks: ["espresso","americano","milk","cappuccino"],
+        desc: "Шоколад і горіхи без кофеїну. Ідеальна вечірня кава. Помел: середній."
       }
     ]
   }
@@ -243,7 +243,7 @@ function showResult() {
   const coffee = filteredCoffees[Math.floor(Math.random() * filteredCoffees.length)];
   const phrase = endPhrases[Math.floor(Math.random() * endPhrases.length)];
 
-  resultEl.innerHTML = `
+  let html = `
     <h2>Ваша кава — ${coffee.name}</h2>
     <img src="${coffee.img}" alt="${coffee.name}">
     <p>${coffee.desc}</p>
@@ -252,6 +252,43 @@ function showResult() {
       <button>☕ Замовити</button>
     </a>
   `;
+
+  // --- Додаткові рекомендації ---
+  let otherCoffees = [];
+  Object.keys(coffeeProfiles).forEach(key => {
+    if (key !== winner) {
+      coffeeProfiles[key].coffees.forEach(c => {
+        if (!selectedMethod || c.method.includes(selectedMethod)) {
+          if (selectedDrink === "milk" || selectedDrink === "cappuccino") {
+            if (c.drinks.includes(selectedDrink)) otherCoffees.push(c);
+          } else {
+            if (!c.drinks.includes("milk") && !c.drinks.includes("cappuccino")) {
+              otherCoffees.unshift(c);
+            } else {
+              otherCoffees.push(c);
+            }
+          }
+        }
+      });
+    }
+  });
+
+  const shuffled = otherCoffees.sort(() => 0.5 - Math.random()).slice(0, 2);
+
+  if (shuffled.length > 0) {
+    html += `<h3>✨ Вам також може сподобатися:</h3><div class="gallery">`;
+    shuffled.forEach(c => {
+      html += `
+        <a href="${c.link}" target="_blank" class="gallery-item">
+          <img src="${c.img}" alt="${c.name}">
+          <p>${c.name}</p>
+        </a>
+      `;
+    });
+    html += `</div>`;
+  }
+
+  resultEl.innerHTML = html;
   quizEl.classList.add("hidden");
   resultEl.classList.remove("hidden");
 }
