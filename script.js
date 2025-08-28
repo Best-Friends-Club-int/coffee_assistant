@@ -3,7 +3,7 @@ const endPhrases = [
   "😏 Чудовий вибір! Замов і зареєструйся в нашому клубі, щоб отримати ще більше!",
   "🎯 У тебе чудовий смак! Час замовити каву та приєднатися до нашої спільноти!",
   "☕ Оце результат! Тепер справа за малим — придбай каву та реєструйся в нашому клубі кавових ентузіастів.",
-  "😉 О, також одна з моїх улюблених! А тепер мершій реєструватися до нашої міжнародниї спільноти кавоманів!",
+  "😉 О, також одна з моїх улюблених! А тепер мершій реєструватися до нашої міжнародної спільноти кавоманів!",
   "✨ У тебе є смак до життя, однозначно! Розділи свій досвід з нами та реєструйся до нашого клубу!"
 ];
 
@@ -83,7 +83,7 @@ const questions = [
   }
 ];
 
-// --- Профілі кави з описами ---
+// --- Профілі кави ---
 const coffeeProfiles = {
   fruit: {
     coffees: [
@@ -113,7 +113,7 @@ const coffeeProfiles = {
         img: "images/brazil_mogiana.png",
         method: ["espresso","moka"],
         drinks: ["espresso","milk","cappuccino"],
-        desc: "Молочний шоколад, горіхи та відтінки печива. Ідеальна для еспресо й молочних напоїв. Помел: дрібний."
+        desc: "Молочний шоколад, горіхи та відтінки печива. Ідеальна для еспресо й молочних напоїв."
       },
       { 
         name: "Colombia Excelso 250g",
@@ -181,7 +181,7 @@ const coffeeProfiles = {
         img: "images/columbia_decaf.png",
         method: ["espresso","immersion"],
         drinks: ["espresso","americano","milk","cappuccino"],
-        desc: "Шоколад і горіхи без кофеїну. Ідеальна вечірня кава. "
+        desc: "Шоколад і горіхи без кофеїну. Ідеальна вечірня кава."
       }
     ]
   }
@@ -209,7 +209,14 @@ function showQuestion() {
     card.innerHTML = `<img src="${a.img}" alt="${a.text}"><p>${a.text}</p>`;
     card.onclick = () => {
       if (scores[a.tag] !== undefined) scores[a.tag]++;
-      if (a.method) selectedMethod = a.method;
+      if (a.method) {
+        selectedMethod = a.method;
+        // якщо вибрали filter → одразу до результату
+        if (selectedMethod === "filter") {
+          showResult();
+          return;
+        }
+      }
       if (a.drink) selectedDrink = a.drink;
 
       currentQ++;
@@ -230,17 +237,55 @@ function showResult() {
     scores[a] > scores[b] ? a : b
   );
   let coffeeSet = coffeeProfiles[winner];
+
+  // --- якщо filter ---
+  if (selectedMethod === "filter") {
+    const filtered = coffeeSet.coffees.filter(c => c.method.includes("filter"));
+    const main = filtered[0];
+    const alt = filtered[1];
+
+    let html = `
+      <h2>Ваша кава — ${main.name}</h2>
+      <img src="${main.img}" alt="${main.name}">
+      <p>${main.desc}</p>
+      <div class="final-phrase">${endPhrases[Math.floor(Math.random() * endPhrases.length)]}</div>
+      <a href="${main.link}" target="_blank">
+        <button>☕ Замовити</button>
+      </a>
+    `;
+
+    if (alt) {
+      html += `<h3>✨ Вам також може сподобатися:</h3>
+      <div class="gallery">
+        <a href="${alt.link}" target="_blank" class="gallery-item">
+          <img src="${alt.img}" alt="${alt.name}">
+          <p>${alt.name}</p>
+        </a>
+      </div>`;
+    }
+
+    resultEl.innerHTML = html;
+    quizEl.classList.add("hidden");
+    resultEl.classList.remove("hidden");
+    return;
+  }
+
+  // --- стандартна логіка для інших методів ---
   let filteredCoffees = coffeeSet.coffees;
 
+  // метод
   if (selectedMethod) {
-    filteredCoffees = filteredCoffees.filter(c => c.method.includes(selectedMethod));
+    const match = filteredCoffees.filter(c => c.method.includes(selectedMethod));
+    if (match.length > 0) filteredCoffees = match;
   }
-  if (selectedDrink) {
-    filteredCoffees = filteredCoffees.filter(c => c.drinks.includes(selectedDrink));
-  }
-  if (filteredCoffees.length === 0) filteredCoffees = coffeeSet.coffees;
 
-  const coffee = filteredCoffees[Math.floor(Math.random() * filteredCoffees.length)];
+  // напій
+  if (selectedDrink) {
+    const match = filteredCoffees.filter(c => c.drinks.includes(selectedDrink));
+    if (match.length > 0) filteredCoffees = match;
+  }
+
+  const coffee = filteredCoffees[0];
   const phrase = endPhrases[Math.floor(Math.random() * endPhrases.length)];
 
   let html = `
@@ -253,33 +298,34 @@ function showResult() {
     </a>
   `;
 
-  // --- Додаткові рекомендації ---
-let otherCoffees = [];
-Object.keys(coffeeProfiles).forEach(key => {
-  if (key !== winner) {
-    coffeeProfiles[key].coffees.forEach(c => {
-      // суворий фільтр по методу
-      if (selectedMethod && !c.method.includes(selectedMethod)) return;
-
-      // якщо обрано milk/cappuccino → беремо тільки ці
-      if (selectedDrink === "milk" || selectedDrink === "cappuccino") {
-        if (c.drinks.includes(selectedDrink)) {
-          otherCoffees.push(c);
-        }
-      } else {
-        // якщо НЕ молочний → віддавати перевагу немолочним
-        if (!c.drinks.includes("milk") && !c.drinks.includes("cappuccino")) {
-          otherCoffees.unshift(c);
-        } else {
-          otherCoffees.push(c);
-        }
+  // додаткові рекомендації
+  let otherCoffees = [];
+  Object.keys(coffeeProfiles).forEach(key => {
+    if (key !== winner) {
+      let candidates = coffeeProfiles[key].coffees;
+      if (selectedMethod) {
+        const m = candidates.filter(c => c.method.includes(selectedMethod));
+        if (m.length > 0) candidates = m;
       }
-    });
-  }
-});
+      if (selectedDrink) {
+        const d = candidates.filter(c => c.drinks.includes(selectedDrink));
+        if (d.length > 0) candidates = d;
+      }
+      if (selectedDrink !== "milk" && selectedDrink !== "cappuccino") {
+        candidates.forEach(c => {
+          if (!c.drinks.includes("milk") && !c.drinks.includes("cappuccino")) {
+            otherCoffees.unshift(c);
+          } else {
+            otherCoffees.push(c);
+          }
+        });
+      } else {
+        otherCoffees = otherCoffees.concat(candidates);
+      }
+    }
+  });
 
-  const shuffled = otherCoffees.sort(() => 0.5 - Math.random()).slice(0, 2);
-
+  const shuffled = otherCoffees.slice(0, 2);
   if (shuffled.length > 0) {
     html += `<h3>✨ Вам також може сподобатися:</h3><div class="gallery">`;
     shuffled.forEach(c => {
