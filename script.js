@@ -120,7 +120,10 @@ function addTags(tags) {
 
 function showQuestion() {
   // якщо користувач вибрав filter → пропускаємо питання про напій
-  if (selectedMethod === "filter" && currentQ === 4) {
+  if (
+    selectedMethod === "filter" &&
+    questions[currentQ].answers.some(a => a.drink)
+  ) {
     showResult();
     return;
   }
@@ -184,19 +187,16 @@ function showResult() {
   }
 
   // --- звичайна логіка ---
-  // фільтр-кави не показуються при milk/cappuccino
   if (selectedDrink === "milk" || selectedDrink === "cappuccino") {
     coffees = coffees.filter(c => c.category !== "filter");
   }
 
-  // при еспресо шанс 10% показати filter
   if (selectedDrink === "espresso") {
     if (Math.random() > 0.1) {
       coffees = coffees.filter(c => c.category !== "filter");
     }
   }
 
-  // рахунок
   let scores = coffees.map(coffee => {
     let score = 0;
     for (const [tag, weight] of Object.entries(userProfile)) {
@@ -233,7 +233,6 @@ function showResult() {
   resultEl.classList.remove("hidden");
 }
 
-// старт
 startBtn.addEventListener("click", () => {
   startScreen.classList.add("hidden");
   quizEl.classList.remove("hidden");
