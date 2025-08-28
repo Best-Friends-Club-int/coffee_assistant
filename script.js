@@ -92,7 +92,7 @@ const coffeeProfiles = {
         link: "https://bfc24.com/uk/store/product/43",
         img: "images/ethiopia_gadeb.png",
         method: ["filter"],
-        drinks: ["americano"],
+        drinks: 
         desc: "Соковиті ягоди чорниці, Earl Grey і медовий шлейф. Ідеальна для фільтру."
       },
       { 
@@ -100,7 +100,7 @@ const coffeeProfiles = {
         link: "https://bfc24.com/uk/store/product/39",
         img: "images/kenya_aa.png",
         method: ["filter"],
-        drinks: ["americano"],
+        drinks: 
         desc: "Чорна смородина, квіткові ноти й карамельний післясмак. Найкраще у V60."
       }
     ]
