@@ -92,7 +92,7 @@ const coffeeProfiles = {
         link: "https://bfc24.com/uk/store/product/43",
         img: "images/ethiopia_gadeb.png",
         method: ["filter"],
-        drinks: 
+        drinks: ["americano"],
         desc: "Соковиті ягоди чорниці, Earl Grey і медовий шлейф. Ідеальна для фільтру."
       },
       { 
@@ -100,7 +100,7 @@ const coffeeProfiles = {
         link: "https://bfc24.com/uk/store/product/39",
         img: "images/kenya_aa.png",
         method: ["filter"],
-        drinks: 
+        drinks: ["americano"],
         desc: "Чорна смородина, квіткові ноти й карамельний післясмак. Найкраще у V60."
       }
     ]
@@ -211,7 +211,7 @@ function showQuestion() {
       if (scores[a.tag] !== undefined) scores[a.tag]++;
       if (a.method) {
         selectedMethod = a.method;
-        // якщо вибрали filter → одразу до результату
+        // якщо filter → одразу результат
         if (selectedMethod === "filter") {
           showResult();
           return;
@@ -237,8 +237,9 @@ function showResult() {
     scores[a] > scores[b] ? a : b
   );
   let coffeeSet = coffeeProfiles[winner];
+  let filteredCoffees = coffeeSet.coffees;
 
-  // --- якщо filter ---
+  // --- filter-режим ---
   if (selectedMethod === "filter") {
     const filtered = coffeeSet.coffees.filter(c => c.method.includes("filter"));
     const main = filtered[0];
@@ -270,19 +271,31 @@ function showResult() {
     return;
   }
 
-  // --- стандартна логіка для інших методів ---
-  let filteredCoffees = coffeeSet.coffees;
-
-  // метод
+  // --- фільтруємо по методу (крім filter) ---
   if (selectedMethod) {
     const match = filteredCoffees.filter(c => c.method.includes(selectedMethod));
     if (match.length > 0) filteredCoffees = match;
   }
 
-  // напій
+  // --- фільтруємо по напою ---
   if (selectedDrink) {
     const match = filteredCoffees.filter(c => c.drinks.includes(selectedDrink));
     if (match.length > 0) filteredCoffees = match;
+  }
+
+  // --- відсікаємо filter-кави у всіх інших випадках ---
+  filteredCoffees = filteredCoffees.filter(c => !c.method.includes("filter"));
+
+  // --- якщо espresso → бленди мають пріоритет ---
+  if (selectedMethod === "espresso") {
+    const blendPriority = ["Arabusta Dark 250g", "Arabusta Amber 250g", "Arabica Midday 250g"];
+    filteredCoffees.sort((a, b) => {
+      const aBlend = blendPriority.includes(a.name);
+      const bBlend = blendPriority.includes(b.name);
+      if (aBlend && !bBlend) return -1;
+      if (!aBlend && bBlend) return 1;
+      return 0;
+    });
   }
 
   const coffee = filteredCoffees[0];
@@ -297,47 +310,6 @@ function showResult() {
       <button>☕ Замовити</button>
     </a>
   `;
-
-  // додаткові рекомендації
-  let otherCoffees = [];
-  Object.keys(coffeeProfiles).forEach(key => {
-    if (key !== winner) {
-      let candidates = coffeeProfiles[key].coffees;
-      if (selectedMethod) {
-        const m = candidates.filter(c => c.method.includes(selectedMethod));
-        if (m.length > 0) candidates = m;
-      }
-      if (selectedDrink) {
-        const d = candidates.filter(c => c.drinks.includes(selectedDrink));
-        if (d.length > 0) candidates = d;
-      }
-      if (selectedDrink !== "milk" && selectedDrink !== "cappuccino") {
-        candidates.forEach(c => {
-          if (!c.drinks.includes("milk") && !c.drinks.includes("cappuccino")) {
-            otherCoffees.unshift(c);
-          } else {
-            otherCoffees.push(c);
-          }
-        });
-      } else {
-        otherCoffees = otherCoffees.concat(candidates);
-      }
-    }
-  });
-
-  const shuffled = otherCoffees.slice(0, 2);
-  if (shuffled.length > 0) {
-    html += `<h3>✨ Вам також може сподобатися:</h3><div class="gallery">`;
-    shuffled.forEach(c => {
-      html += `
-        <a href="${c.link}" target="_blank" class="gallery-item">
-          <img src="${c.img}" alt="${c.name}">
-          <p>${c.name}</p>
-        </a>
-      `;
-    });
-    html += `</div>`;
-  }
 
   resultEl.innerHTML = html;
   quizEl.classList.add("hidden");
