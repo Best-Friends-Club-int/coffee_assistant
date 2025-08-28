@@ -7,7 +7,6 @@ const endPhrases = [
   "✨ У тебе є смак до життя, однозначно! Розділи свій досвід з нами та реєструйся до нашого клубу!"
 ];
 
-// --- Питання ---
 const questions = [
   {
     text: "🍰 Улюблений десерт дитинства?",
@@ -36,33 +35,38 @@ const questions = [
       { text: "Деревні/пряні", tags: { dark: 2 }, img: "images/perfume_wood.png" }
     ]
   },
+
+  // --- фан-питання ---
   {
-  text: "☀️ Яка сцена тобі ближча?",
-  answers: [
-    { text: "Середземна фієста", tags: {}, img: "images/scene_fiesta.png" },
-    { text: "Прогулянка після дощу", tags: {}, img: "images/scene_rain.png" },
-    { text: "Затишний плед і книга", tags: {}, img: "images/scene_book.png" },
-    { text: "Ранковий коворкінг", tags: {}, img: "images/scene_cowork.png" }
-  ]
-},
-{
-  text: "🍸 Який коктейль твій улюблений?",
-  answers: [
-    { text: "Апероль Шприц", tags: {}, img: "images/cocktail_aperol.png" },
-    { text: "Мохіто", tags: {}, img: "images/cocktail_mojito.png" },
-    { text: "Віскі-кола", tags: {}, img: "images/cocktail_whiskey.png" },
-    { text: "Еспресо мартіні", tags: {}, img: "images/cocktail_espresso.png" }
-  ]
-},
-{
-  text: "🌿 Як ти любиш проводити вихідні?",
-  answers: [
-    { text: "Прогулянка", tags: {}, img: "images/weekend_nature.png" },
-    { text: "Вечірка з друзями", tags: {}, img: "images/weekend_party.png" },
-    { text: "Затишний день вдома", tags: {}, img: "images/weekend_home.png" },
-    { text: "Подорож у нове місто", tags: {}, img: "images/weekend_trip.png" }
-  ]
-},
+    text: "☀️ Яка сцена тобі ближча?",
+    answers: [
+      { text: "Середземна фієста", tags: {}, img: "images/scene_fiesta.png" },
+      { text: "Прогулянка після дощу", tags: {}, img: "images/scene_rain.png" },
+      { text: "Затишний плед і книга", tags: {}, img: "images/scene_book.png" },
+      { text: "Ранковий коворкінг", tags: {}, img: "images/scene_cowork.png" }
+    ]
+  },
+  {
+    text: "🍸 Який коктейль твій улюблений?",
+    answers: [
+      { text: "Апероль Шприц", tags: {}, img: "images/cocktail_aperol.png" },
+      { text: "Мохіто", tags: {}, img: "images/cocktail_mojito.png" },
+      { text: "Віскі-кола", tags: {}, img: "images/cocktail_whiskey.png" },
+      { text: "Еспресо мартіні", tags: {}, img: "images/cocktail_espresso.png" }
+    ]
+  },
+  {
+    text: "🌿 Як ти любиш проводити вихідні?",
+    answers: [
+      { text: "Прогулянка", tags: {}, img: "images/weekend_nature.png" },
+      { text: "Вечірка з друзями", tags: {}, img: "images/weekend_party.png" },
+      { text: "Затишний день вдома", tags: {}, img: "images/weekend_home.png" },
+      { text: "Подорож у нове місто", tags: {}, img: "images/weekend_trip.png" }
+    ]
+  },
+
+  // --- ключові питання ---
+  {
     text: "🫖 Який метод заварювання тобі ближче?",
     answers: [
       { text: "Фільтр (V60, Chemex)", tags: { filter: 3, fruit: 1 }, method: "filter", img: "images/brew_filter.png" },
