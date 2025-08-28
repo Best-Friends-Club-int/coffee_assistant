@@ -7,9 +7,8 @@ const endPhrases = [
   "✨ У тебе є смак до життя, однозначно! Розділи свій досвід з нами та реєструйся до нашого клубу!"
 ];
 
-// --- Питання + відповіді ---
+// --- Питання ---
 const questions = [
-  // індексовані питання (впливають на логіку)
   {
     text: "🍰 Улюблений десерт дитинства?",
     answers: [
@@ -54,44 +53,15 @@ const questions = [
       { text: "Американо з молоком", tags: { milk: 2 }, drink: "milk", img: "images/drink_milk.png" },
       { text: "Капучино", tags: { cappuccino: 2, milk: 2 }, drink: "cappuccino", img: "images/drink_cappuccino.png" }
     ]
-  },
-
-  // фан-питання (не індексуються)
-  {
-    text: "☀️ Яка сцена тобі ближча?",
-    answers: [
-      { text: "Середземна фієста", tags: {}, img: "images/scene_fiesta.png" },
-      { text: "Прогулянка після дощу", tags: {}, img: "images/scene_rain.png" },
-      { text: "Затишний плед і книга", tags: {}, img: "images/scene_book.png" },
-      { text: "Ранковий коворкінг", tags: {}, img: "images/scene_cowork.png" }
-    ]
-  },
-  {
-    text: "🍸 Який коктейль твій улюблений?",
-    answers: [
-      { text: "Апероль Шприц", tags: {}, img: "images/cocktail_aperol.png" },
-      { text: "Мохіто", tags: {}, img: "images/cocktail_mojito.png" },
-      { text: "Віскі-кола", tags: {}, img: "images/cocktail_whiskey.png" },
-      { text: "Еспресо мартіні", tags: {}, img: "images/cocktail_espresso.png" }
-    ]
-  },
-  {
-    text: "🌿 Як ти любиш проводити вихідні?",
-    answers: [
-      { text: "Прогулянка", tags: {}, img: "images/weekend_nature.png" },
-      { text: "Вечірка з друзями", tags: {}, img: "images/weekend_party.png" },
-      { text: "Затишний день вдома", tags: {}, img: "images/weekend_home.png" },
-      { text: "Подорож у нове місто", tags: {}, img: "images/weekend_trip.png" }
-    ]
   }
 ];
 
 // --- Профілі кави ---
 const coffeeProfiles = [
-  { name: "Ethiopia Gedeb 250g", img: "images/ethiopia_gadeb.png", link: "#", tags: { fruit: 2, filter: 3, americano: 1 } },
-  { name: "Kenya AA Gikanda 250g", img: "images/kenya_aa.png", link: "#", tags: { fruit: 2, filter: 3, americano: 1 } },
+  { name: "Ethiopia Gedeb 250g", img: "images/ethiopia_gadeb.png", link: "#", tags: { fruit: 2, filter: 3, americano: 1 }, category: "filter" },
+  { name: "Kenya AA Gikanda 250g", img: "images/kenya_aa.png", link: "#", tags: { fruit: 2, filter: 3, americano: 1 }, category: "filter" },
   { name: "Brazil Mogiana 250g", img: "images/brazil_mogiana.png", link: "#", tags: { choco: 2, espresso: 3, milk: 2, cappuccino: 2, moka: 1 } },
-  { name: "Colombia Excelso 250g", img: "images/colombia_excleso.png", link: "#", tags: { choco: 2, espresso: 2, milk: 1, moka: 1 } },
+  { name: "Colombia Excelso 250g", img: "images/colombia_excelso.png", link: "#", tags: { choco: 2, espresso: 2, milk: 1, moka: 1 } },
   { name: "Arabica Midday 250g", img: "images/midday.png", link: "#", tags: { dessert: 2, espresso: 2, milk: 2, cappuccino: 2, moka: 1 } },
   { name: "Arabica Midnight 250g", img: "images/midnight.png", link: "#", tags: { choco: 1, dessert: 2, espresso: 2, americano: 1, immersion: 1 } },
   { name: "Arabica Sunrise 250g", img: "images/sunrise.png", link: "#", tags: { dessert: 2, espresso: 2, americano: 1, milk: 1, immersion: 1, moka: 1 } },
@@ -103,6 +73,8 @@ const coffeeProfiles = [
 // --- Логіка ---
 let currentQ = 0;
 let userProfile = {};
+let selectedMethod = null;
+let selectedDrink = null;
 
 const quizEl = document.getElementById("quiz");
 const resultEl = document.getElementById("result");
@@ -117,6 +89,12 @@ function addTags(tags) {
 }
 
 function showQuestion() {
+  // якщо користувач вибрав filter → пропускаємо питання про напій
+  if (selectedMethod === "filter" && currentQ === 4) {
+    showResult();
+    return;
+  }
+
   quizEl.innerHTML = `<h2>${questions[currentQ].text}</h2>`;
   const gallery = document.createElement("div");
   gallery.className = "gallery";
@@ -127,6 +105,9 @@ function showQuestion() {
     card.innerHTML = `<img src="${a.img}" alt="${a.text}"><p>${a.text}</p>`;
     card.onclick = () => {
       if (a.tags && Object.keys(a.tags).length > 0) addTags(a.tags);
+      if (a.method) selectedMethod = a.method;
+      if (a.drink) selectedDrink = a.drink;
+
       currentQ++;
       if (currentQ < questions.length) {
         showQuestion();
@@ -141,18 +122,60 @@ function showQuestion() {
 }
 
 function showResult() {
-  let scores = coffeeProfiles.map(coffee => {
+  let coffees = [...coffeeProfiles];
+
+  // --- якщо метод = filter ---
+  if (selectedMethod === "filter") {
+    const filterCoffees = coffees.filter(c => c.category === "filter");
+    const main = filterCoffees[0];
+    const alt = filterCoffees[1];
+
+    let html = `
+      <h2>Ваша кава — ${main.name}</h2>
+      <img src="${main.img}" alt="${main.name}">
+      <div class="final-phrase">${endPhrases[Math.floor(Math.random() * endPhrases.length)]}</div>
+      <a href="${main.link}" target="_blank"><button>☕ Замовити</button></a>
+    `;
+
+    if (alt) {
+      html += `<h3>✨ Вам також може сподобатися:</h3>
+      <div class="gallery">
+        <a href="${alt.link}" target="_blank" class="gallery-item">
+          <img src="${alt.img}" alt="${alt.name}">
+          <p>${alt.name}</p>
+        </a>
+      </div>`;
+    }
+
+    resultEl.innerHTML = html;
+    quizEl.classList.add("hidden");
+    resultEl.classList.remove("hidden");
+    return;
+  }
+
+  // --- звичайна логіка ---
+  // фільтр-кави не показуються при milk/cappuccino
+  if (selectedDrink === "milk" || selectedDrink === "cappuccino") {
+    coffees = coffees.filter(c => c.category !== "filter");
+  }
+
+  // при еспресо шанс 10% показати filter
+  if (selectedDrink === "espresso") {
+    if (Math.random() > 0.1) {
+      coffees = coffees.filter(c => c.category !== "filter");
+    }
+  }
+
+  // рахунок
+  let scores = coffees.map(coffee => {
     let score = 0;
     for (const [tag, weight] of Object.entries(userProfile)) {
-      if (coffee.tags[tag]) {
-        score += Math.min(weight, coffee.tags[tag]);
-      }
+      if (coffee.tags[tag]) score += Math.min(weight, coffee.tags[tag]);
     }
     return { ...coffee, score };
   });
 
   scores.sort((a, b) => b.score - a.score);
-
   const mainCoffee = scores[0];
   const recommendations = scores.slice(1, 3);
 
@@ -180,6 +203,7 @@ function showResult() {
   resultEl.classList.remove("hidden");
 }
 
+// старт
 startBtn.addEventListener("click", () => {
   startScreen.classList.add("hidden");
   quizEl.classList.remove("hidden");
