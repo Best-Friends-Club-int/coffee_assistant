@@ -37,6 +37,32 @@ const questions = [
     ]
   },
   {
+  text: "☀️ Яка сцена тобі ближча?",
+  answers: [
+    { text: "Середземна фієста", tags: {}, img: "images/scene_fiesta.png" },
+    { text: "Прогулянка після дощу", tags: {}, img: "images/scene_rain.png" },
+    { text: "Затишний плед і книга", tags: {}, img: "images/scene_book.png" },
+    { text: "Ранковий коворкінг", tags: {}, img: "images/scene_cowork.png" }
+  ]
+},
+{
+  text: "🍸 Який коктейль твій улюблений?",
+  answers: [
+    { text: "Апероль Шприц", tags: {}, img: "images/cocktail_aperol.png" },
+    { text: "Мохіто", tags: {}, img: "images/cocktail_mojito.png" },
+    { text: "Віскі-кола", tags: {}, img: "images/cocktail_whiskey.png" },
+    { text: "Еспресо мартіні", tags: {}, img: "images/cocktail_espresso.png" }
+  ]
+},
+{
+  text: "🌿 Як ти любиш проводити вихідні?",
+  answers: [
+    { text: "Прогулянка", tags: {}, img: "images/weekend_nature.png" },
+    { text: "Вечірка з друзями", tags: {}, img: "images/weekend_party.png" },
+    { text: "Затишний день вдома", tags: {}, img: "images/weekend_home.png" },
+    { text: "Подорож у нове місто", tags: {}, img: "images/weekend_trip.png" }
+  ]
+},
     text: "🫖 Який метод заварювання тобі ближче?",
     answers: [
       { text: "Фільтр (V60, Chemex)", tags: { filter: 3, fruit: 1 }, method: "filter", img: "images/brew_filter.png" },
@@ -61,7 +87,7 @@ const coffeeProfiles = [
   { name: "Ethiopia Gedeb 250g", img: "images/ethiopia_gadeb.png", link: "#", tags: { fruit: 2, filter: 3, americano: 1 }, category: "filter" },
   { name: "Kenya AA Gikanda 250g", img: "images/kenya_aa.png", link: "#", tags: { fruit: 2, filter: 3, americano: 1 }, category: "filter" },
   { name: "Brazil Mogiana 250g", img: "images/brazil_mogiana.png", link: "#", tags: { choco: 2, espresso: 3, milk: 2, cappuccino: 2, moka: 1 } },
-  { name: "Colombia Excelso 250g", img: "images/colombia_excelso.png", link: "#", tags: { choco: 2, espresso: 2, milk: 1, moka: 1 } },
+  { name: "Colombia Excelso 250g", img: "images/colombia_excleso.png", link: "#", tags: { choco: 2, espresso: 2, milk: 1, moka: 1 } },
   { name: "Arabica Midday 250g", img: "images/midday.png", link: "#", tags: { dessert: 2, espresso: 2, milk: 2, cappuccino: 2, moka: 1 } },
   { name: "Arabica Midnight 250g", img: "images/midnight.png", link: "#", tags: { choco: 1, dessert: 2, espresso: 2, americano: 1, immersion: 1 } },
   { name: "Arabica Sunrise 250g", img: "images/sunrise.png", link: "#", tags: { dessert: 2, espresso: 2, americano: 1, milk: 1, immersion: 1, moka: 1 } },
