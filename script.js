@@ -9,6 +9,7 @@ const endPhrases = [
 
 // --- Питання + відповіді ---
 const questions = [
+  // індексовані питання (впливають на логіку)
   {
     text: "🍰 Улюблений десерт дитинства?",
     answers: [
@@ -53,10 +54,39 @@ const questions = [
       { text: "Американо з молоком", tags: { milk: 2 }, drink: "milk", img: "images/drink_milk.png" },
       { text: "Капучино", tags: { cappuccino: 2, milk: 2 }, drink: "cappuccino", img: "images/drink_cappuccino.png" }
     ]
+  },
+
+  // фан-питання (не індексуються)
+  {
+    text: "☀️ Яка сцена тобі ближча?",
+    answers: [
+      { text: "Середземна фієста", tags: {}, img: "images/scene_fiesta.png" },
+      { text: "Прогулянка після дощу", tags: {}, img: "images/scene_rain.png" },
+      { text: "Затишний плед і книга", tags: {}, img: "images/scene_book.png" },
+      { text: "Ранковий коворкінг", tags: {}, img: "images/scene_cowork.png" }
+    ]
+  },
+  {
+    text: "🍸 Який коктейль твій улюблений?",
+    answers: [
+      { text: "Апероль Шприц", tags: {}, img: "images/cocktail_aperol.png" },
+      { text: "Мохіто", tags: {}, img: "images/cocktail_mojito.png" },
+      { text: "Віскі-кола", tags: {}, img: "images/cocktail_whiskey.png" },
+      { text: "Еспресо мартіні", tags: {}, img: "images/cocktail_espresso.png" }
+    ]
+  },
+  {
+    text: "🌿 Як ти любиш проводити вихідні?",
+    answers: [
+      { text: "Прогулянка", tags: {}, img: "images/weekend_nature.png" },
+      { text: "Вечірка з друзями", tags: {}, img: "images/weekend_party.png" },
+      { text: "Затишний день вдома", tags: {}, img: "images/weekend_home.png" },
+      { text: "Подорож у нове місто", tags: {}, img: "images/weekend_trip.png" }
+    ]
   }
 ];
 
-// --- Профілі кави (паспорт тегів) ---
+// --- Профілі кави ---
 const coffeeProfiles = [
   { name: "Ethiopia Gedeb 250g", img: "images/ethiopia_gadeb.png", link: "#", tags: { fruit: 2, filter: 3, americano: 1 } },
   { name: "Kenya AA Gikanda 250g", img: "images/kenya_aa.png", link: "#", tags: { fruit: 2, filter: 3, americano: 1 } },
@@ -72,14 +102,13 @@ const coffeeProfiles = [
 
 // --- Логіка ---
 let currentQ = 0;
-let userProfile = {}; // теги користувача
+let userProfile = {};
 
 const quizEl = document.getElementById("quiz");
 const resultEl = document.getElementById("result");
 const startScreen = document.getElementById("start-screen");
 const startBtn = document.getElementById("startBtn");
 
-// функція додавання тегів у профіль користувача
 function addTags(tags) {
   for (const [key, value] of Object.entries(tags)) {
     if (!userProfile[key]) userProfile[key] = 0;
@@ -87,7 +116,6 @@ function addTags(tags) {
   }
 }
 
-// відображення питання
 function showQuestion() {
   quizEl.innerHTML = `<h2>${questions[currentQ].text}</h2>`;
   const gallery = document.createElement("div");
@@ -98,7 +126,7 @@ function showQuestion() {
     card.className = "gallery-item";
     card.innerHTML = `<img src="${a.img}" alt="${a.text}"><p>${a.text}</p>`;
     card.onclick = () => {
-      addTags(a.tags);
+      if (a.tags && Object.keys(a.tags).length > 0) addTags(a.tags);
       currentQ++;
       if (currentQ < questions.length) {
         showQuestion();
@@ -112,13 +140,12 @@ function showQuestion() {
   quizEl.appendChild(gallery);
 }
 
-// підбір кави
 function showResult() {
   let scores = coffeeProfiles.map(coffee => {
     let score = 0;
     for (const [tag, weight] of Object.entries(userProfile)) {
       if (coffee.tags[tag]) {
-        score += Math.min(weight, coffee.tags[tag]); // враховуємо ваги
+        score += Math.min(weight, coffee.tags[tag]);
       }
     }
     return { ...coffee, score };
@@ -132,7 +159,6 @@ function showResult() {
   let html = `
     <h2>Ваша кава — ${mainCoffee.name}</h2>
     <img src="${mainCoffee.img}" alt="${mainCoffee.name}">
-    <p>${mainCoffee.desc || ""}</p>
     <div class="final-phrase">${endPhrases[Math.floor(Math.random() * endPhrases.length)]}</div>
     <a href="${mainCoffee.link}" target="_blank"><button>☕ Замовити</button></a>
   `;
@@ -154,7 +180,6 @@ function showResult() {
   resultEl.classList.remove("hidden");
 }
 
-// запуск
 startBtn.addEventListener("click", () => {
   startScreen.classList.add("hidden");
   quizEl.classList.remove("hidden");
