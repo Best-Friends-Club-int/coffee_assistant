@@ -1,3 +1,36 @@
+// --- Визначення мови ---
+let userLang = (navigator.language || navigator.userLanguage || "en").slice(0, 2);
+if (!["uk", "en", "es", "ru", "pl"].includes(userLang)) userLang = "en";
+
+// --- Переклади стартового екрану ---
+const startTranslations = {
+  uk: {
+    title: "🤖 Наш кавовий AI-асистент допоможе знайти саме те, що тобі треба☕️",
+    text: "Хочеш дізнатись, яка кава пасує саме твоєму настрою? Ми підкинемо ідею!",
+    button: "🚀 Почати"
+  },
+  en: {
+    title: "🤖 Our coffee AI assistant will help you find exactly what you need☕️",
+    text: "Want to know which coffee matches your mood? We'll give you a hint!",
+    button: "🚀 Let's go"
+  },
+  es: {
+    title: "🤖 Nuestro asistente de café con IA te ayudará a encontrar justo lo que necesitas☕️",
+    text: "¿Quieres saber qué café combina con tu estado de ánimo? ¡Te daremos una idea!",
+    button: "🚀 Empezar"
+  },
+  ru: {
+    title: "🤖 Наш кофейный AI-ассистент поможет найти именно то, что тебе нужно☕️",
+    text: "Хочешь узнать, какой кофе подходит твоему настроению? Мы подскажем идею!",
+    button: "🚀 Начать"
+  },
+  pl: {
+    title: "🤖 Nasz kawowy asystent AI pomoże Ci znaleźć dokładnie to, czego potrzebujesz☕️",
+    text: "Chcesz wiedzieć, jaka kawa pasuje do Twojego nastroju? Podpowiemy Ci pomysł!",
+    button: "🚀 Zaczynamy"
+  }
+};
+
 // --- Фрази для фіналу ---
 const endPhrases = {
   uk: [
