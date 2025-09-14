@@ -1,71 +1,4 @@
-// --- Переклади ---
-const translations = {
-  uk: {
-    startTitle: "☕ Твій кавовий настрій",
-    startText: "Хочеш дізнатись, яка кава пасує саме твоєму настрою? Ми підкинемо ідею!",
-    startBtn: "🚀 Поїхали",
-    resultTitle: "Ваша кава —",
-    alsoLike: "✨ Вам також може сподобатися:"
-  },
-  ru: {
-    startTitle: "☕ Твоё кофейное настроение",
-    startText: "Хочешь узнать, какой кофе подойдёт твоему настроению? Мы подскажем!",
-    startBtn: "🚀 Поехали",
-    resultTitle: "Твой кофе —",
-    alsoLike: "✨ Тебе также может понравиться:"
-  },
-  en: {
-    startTitle: "☕ Your Coffee Mood",
-    startText: "Want to know which coffee matches your vibe? Let's find out!",
-    startBtn: "🚀 Let's go",
-    resultTitle: "Your coffee is —",
-    alsoLike: "✨ You may also like:"
-  },
-  es: {
-    startTitle: "☕ Tu Estado de Café",
-    startText: "¿Quieres saber qué café combina con tu estado de ánimo? ¡Vamos a descubrirlo!",
-    startBtn: "🚀 Vamos",
-    resultTitle: "Tu café es —",
-    alsoLike: "✨ También te puede gustar:"
-  },
-  pl: {
-    startTitle: "☕ Twój Kawowy Nastrój",
-    startText: "Chcesz dowiedzieć się, która kawa pasuje do Twojego nastroju? Podpowiemy Ci!",
-    startBtn: "🚀 Zaczynamy",
-    resultTitle: "Twoja kawa to —",
-    alsoLike: "✨ Może Ci się spodobać:"
-  }
-};
-
-// --- fallback мови ---
-let userLang = navigator.language.slice(0, 2);
-if (!translations[userLang]) userLang = "en";
-const t = translations[userLang];
-
-// --- Фрази для фіналу ---
-const endPhrases = [
-  "😏 Чудовий вибір! Замов і зареєструйся в нашому клубі, щоб отримати ще більше!",
-  "🎯 У тебе чудовий смак! Час замовити каву та приєднатися до нашої спільноти!",
-  "☕ Оце результат! Тепер справа за малим — придбай каву та реєструйся в нашому клубі кавових ентузіастів.",
-  "😉 О, також одна з моїх улюблених! А тепер мершій реєструватися до нашої міжнародної спільноти кавоманів!",
-  "✨ У тебе є смак до життя, однозначно! Розділи свій досвід з нами та реєструйся до нашого клубу!"
-];
-
-// --- Кави ---
-const coffeeProfiles = [
-  { name: "Ethiopia Gedeb 250g", img: "images/ethiopia_gadeb.png", link: "/store/product/43", tags: { fruit: 2, filter: 3, americano: 1 }, category: "filter" },
-  { name: "Kenya AA Gikanda 250g", img: "images/kenya_aa.png", link: "/store/product/39", tags: { fruit: 2, filter: 3, americano: 1 }, category: "filter" },
-  { name: "Brazil Mogiana 250g", img: "images/brazil_mogiana.png", link: "/store/product/33", tags: { choco: 2, espresso: 3, milk: 2, cappuccino: 2, moka: 1 } },
-  { name: "Colombia Excelso 250g", img: "images/colombia_excleso.png", link: "/store/product/35", tags: { choco: 2, espresso: 2, milk: 1, moka: 1 } },
-  { name: "Arabica Midday 250g", img: "images/midday.png", link: "/store/product/45", tags: { dessert: 2, espresso: 2, milk: 2, cappuccino: 2, moka: 1 } },
-  { name: "Arabica Midnight 250g", img: "images/midnight.png", link: "/store/product/31", tags: { choco: 1, dessert: 2, espresso: 2, americano: 1, immersion: 1 } },
-  { name: "Arabica Sunrise 250g", img: "images/sunrise.png", link: "/store/product/36", tags: { dessert: 2, espresso: 2, americano: 1, milk: 1, immersion: 1, moka: 1 } },
-  { name: "Arabusta Dark 250g", img: "images/dark.png", link: "/store/product/29", tags: { dark: 3, espresso: 3, cappuccino: 2, moka: 2 } },
-  { name: "Arabusta Amber 250g", img: "images/amber.png", link: "/store/product/30", tags: { dark: 2, espresso: 2, milk: 2, cappuccino: 2, americano: 1, moka: 1 } },
-  { name: "Decaf Colombia Huila 250g", img: "images/columbia_decaf.png", link: "/store/product/34", tags: { classic: 2, espresso: 2, milk: 1, cappuccino: 1, americano: 1, immersion: 1 } }
-];
-
-// --- Логіка ---
+Так. Перевір, щоб була був антикеш, зберігання кешу, посилання на каву в укр та Європі, реферальне посилання, правильний старт, переклади та така логіка як тут:  // --- Логіка ---
 let currentQ = 0;
 let userProfile = {};
 let selectedMethod = null;
@@ -76,19 +9,6 @@ const resultEl = document.getElementById("result");
 const startScreen = document.getElementById("start-screen");
 const startBtn = document.getElementById("startBtn");
 
-// гео + реф + антикеш
-async function adjustLink(baseLink) {
-  try {
-    const res = await fetch("https://ipapi.co/json/");
-    const data = await res.json();
-    const isUA = data.country_code === "UA";
-    const url = `https://bfc24.com${isUA ? "/uk" : ""}${baseLink}?ref=nedavai&_=${Date.now()}`;
-    return url;
-  } catch {
-    return `https://bfc24.com/uk${baseLink}?ref=nedavai&_=${Date.now()}`;
-  }
-}
-
 function addTags(tags) {
   for (const [key, value] of Object.entries(tags)) {
     if (!userProfile[key]) userProfile[key] = 0;
@@ -96,21 +16,83 @@ function addTags(tags) {
   }
 }
 
-function showResult() {
-  let coffees = [...coffeeProfiles];
-
-  if (selectedMethod === "filter") {
-    const filterCoffees = coffees.filter(c => c.category === "filter");
-    renderResult(filterCoffees[0], [filterCoffees[1]]);
+function showQuestion() {
+  // якщо користувач вибрав filter → пропускаємо питання про напій
+  if (
+    selectedMethod === "filter" &&
+    questions[currentQ].answers.some(a => a.drink)
+  ) {
+    showResult();
     return;
   }
 
+  quizEl.innerHTML = `<h2>${questions[currentQ].text}</h2>`;
+  const gallery = document.createElement("div");
+  gallery.className = "gallery";
+
+  questions[currentQ].answers.forEach(a => {
+    const card = document.createElement("div");
+    card.className = "gallery-item";
+    card.innerHTML = `<img src="${a.img}" alt="${a.text}"><p>${a.text}</p>`;
+    card.onclick = () => {
+      if (a.tags && Object.keys(a.tags).length > 0) addTags(a.tags);
+      if (a.method) selectedMethod = a.method;
+      if (a.drink) selectedDrink = a.drink;
+
+      currentQ++;
+      if (currentQ < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
+    };
+    gallery.appendChild(card);
+  });
+
+  quizEl.appendChild(gallery);
+}
+
+function showResult() {
+  let coffees = [...coffeeProfiles];
+
+  // --- якщо метод = filter ---
+  if (selectedMethod === "filter") {
+    const filterCoffees = coffees.filter(c => c.category === "filter");
+    const main = filterCoffees[0];
+    const alt = filterCoffees[1];
+
+    let html = `
+      <h2>Ваша кава — ${main.name}</h2>
+      <img src="${main.img}" alt="${main.name}">
+      <div class="final-phrase">${endPhrases[Math.floor(Math.random() * endPhrases.length)]}</div>
+      <a href="${main.link}" target="_blank"><button>☕ Замовити</button></a>
+    `;
+
+    if (alt) {
+      html += `<h3>✨ Вам також може сподобатися:</h3>
+      <div class="gallery">
+        <a href="${alt.link}" target="_blank" class="gallery-item">
+          <img src="${alt.img}" alt="${alt.name}">
+          <p>${alt.name}</p>
+        </a>
+      </div>`;
+    }
+
+    resultEl.innerHTML = html;
+    quizEl.classList.add("hidden");
+    resultEl.classList.remove("hidden");
+    return;
+  }
+
+  // --- звичайна логіка ---
   if (selectedDrink === "milk" || selectedDrink === "cappuccino") {
     coffees = coffees.filter(c => c.category !== "filter");
   }
 
   if (selectedDrink === "espresso") {
-    if (Math.random() > 0.1) coffees = coffees.filter(c => c.category !== "filter");
+    if (Math.random() > 0.1) {
+      coffees = coffees.filter(c => c.category !== "filter");
+    }
   }
 
   let scores = coffees.map(coffee => {
@@ -122,44 +104,24 @@ function showResult() {
   });
 
   scores.sort((a, b) => b.score - a.score);
-  renderResult(scores[0], scores.slice(1, 3));
-}
+  const mainCoffee = scores[0];
+  const recommendations = scores.slice(1, 3);
 
-async function renderResult(main, recommendations = []) {
-  const mainLink = await adjustLink(main.link);
   let html = `
-    <h2>${t.resultTitle} ${main.name}</h2>
-    <img src="${main.img}" alt="${main.name}">
+    <h2>Ваша кава — ${mainCoffee.name}</h2>
+    <img src="${mainCoffee.img}" alt="${mainCoffee.name}">
     <div class="final-phrase">${endPhrases[Math.floor(Math.random() * endPhrases.length)]}</div>
-    <a href="${mainLink}" target="_blank"><button>☕ Замовити</button></a>
+    <a href="${mainCoffee.link}" target="_blank"><button>☕ Замовити</button></a>
   `;
 
   if (recommendations.length > 0) {
-    html += `<h3>${t.alsoLike}</h3><div class="gallery">`;
-    for (let c of recommendations) {
-      const link = await adjustLink(c.link);
+    html += `<h3>✨ Вам також може сподобатися:</h3><div class="gallery">`;
+    recommendations.forEach(c => {
       html += `
-        <a href="${link}" target="_blank" class="gallery-item">
+        <a href="${c.link}" target="_blank" class="gallery-item">
           <img src="${c.img}" alt="${c.name}">
           <p>${c.name}</p>
         </a>`;
-    }
+    });
     html += `</div>`;
   }
-
-  resultEl.innerHTML = html;
-  quizEl.classList.add("hidden");
-  resultEl.classList.remove("hidden");
-}
-
-// старт
-startBtn.addEventListener("click", () => {
-  startScreen.classList.add("hidden");
-  quizEl.classList.remove("hidden");
-  showResult(); // тут має бути showQuestion() після того як вставимо питання
-});
-
-// --- застосування перекладів на старт ---
-document.querySelector("h1").innerText = t.startTitle;
-startScreen.querySelector("h2").innerText = t.startText;
-startBtn.innerText = t.startBtn;
