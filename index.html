@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Your Coffee Mood</title>
 
-  <!-- Anti-cache hints (допомагає уникати кешу на рівні сторінки) -->
+  <!-- Anti-cache -->
   <meta http-equiv="Cache-Control" content="no-store, no-cache, must-revalidate, max-age=0" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -17,46 +17,41 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- Головний заголовок (оновлюється скриптом при виборі мови) -->
+  <!-- Main title (updated by script after language selection) -->
   <h1>☕ <span id="main-title">Your Coffee Mood</span></h1>
 
-  <!-- Екран вибору мови -->
+  <!-- Language selection screen -->
   <div id="lang-screen">
     <h2>🌍 Select your language</h2>
     <p>Choose a language to begin</p>
 
     <div class="lang-buttons">
-      <button class="btn-lang" onclick="selectLanguage('uk')">Українська</button>
-      <button class="btn-lang" onclick="selectLanguage('en')">English</button>
-      <button class="btn-lang" onclick="selectLanguage('es')">Español</button>
-      <button class="btn-lang" onclick="selectLanguage('pl')">Polski</button>
-      <button class="btn-lang" onclick="selectLanguage('ru')">Русский</button>
+      <button type="button" class="btn-lang" data-lang="uk">Українська</button>
+      <button type="button" class="btn-lang" data-lang="en">English</button>
+      <button type="button" class="btn-lang" data-lang="es">Español</button>
+      <button type="button" class="btn-lang" data-lang="pl">Polski</button>
+      <button type="button" class="btn-lang" data-lang="ru">Русский</button>
     </div>
   </div>
 
-  <!-- Стартовий екран (ховається за замовчуванням, показується після вибору мови) -->
+  <!-- Start screen (shown after language selection) -->
   <div id="start-screen" class="hidden">
     <h2></h2>
     <p></p>
-    <button id="startBtn"></button>
+    <button id="startBtn" type="button"></button>
   </div>
 
-  <!-- Квіз -->
+  <!-- Quiz -->
   <div id="quiz" class="hidden"></div>
 
-  <!-- Результат -->
+  <!-- Result -->
   <div id="result" class="hidden"></div>
 
-  <!-- Скрипт (твій повний script.js) -->
+  <!-- Script -->
   <script src="script.js" defer></script>
 
-  <!-- Невеличкий inline-шейм для відступів між мовами (про всяк випадок, якщо у style.css нема) -->
-  <style>
-    #lang-screen { text-align: center; }
-    .lang-buttons {
-      display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 12px;
-    }
-    .btn-lang { padding: 10px 16px; cursor: pointer; }
-  </style>
+  <noscript>
+    JavaScript is required to run this quiz. Please enable JavaScript in your browser.
+  </noscript>
 </body>
 </html>
