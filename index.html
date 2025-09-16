@@ -5,19 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Your Coffee Mood</title>
 
-  <!-- Шрифти -->
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@400;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Стилі -->
+  <!-- Styles -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>☕ <span id="main-title">Your Coffee Mood</span></h1>
 
-  <!-- Екран вибору мови -->
+  <!-- Language selection -->
   <div id="lang-screen">
-    <h2>🌍 Choose your language</h2>
+    <h2>Select your language</h2>
     <div class="lang-buttons">
       <button onclick="selectLanguage('uk')">Українська</button>
       <button onclick="selectLanguage('en')">English</button>
@@ -27,20 +27,20 @@
     </div>
   </div>
 
-  <!-- Стартовий екран -->
+  <!-- Start screen -->
   <div id="start-screen" class="hidden">
     <h2></h2>
     <p></p>
     <button id="startBtn"></button>
   </div>
 
-  <!-- Квіз -->
+  <!-- Quiz -->
   <div id="quiz" class="hidden"></div>
 
-  <!-- Результат -->
+  <!-- Result -->
   <div id="result" class="hidden"></div>
 
-  <!-- Скрипт -->
+  <!-- Script -->
   <script src="script.js" defer></script>
 </body>
 </html>
