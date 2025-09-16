@@ -29,6 +29,35 @@ h3 {
   margin-top: 30px;
   margin-bottom: 15px;
 }
+/* --- Language screen --- */
+#lang-screen h2 {
+  margin-bottom: 20px;
+  font-size: 22px;
+  color: #006d5b;
+}
+
+.lang-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* відстань між кнопками */
+  margin: 0 auto;
+  max-width: 250px;
+}
+
+.lang-buttons button {
+  padding: 14px;
+  font-size: 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #009879;
+  color: #fff;
+  transition: background 0.3s;
+}
+
+.lang-buttons button:hover {
+  background-color: #007a63;
+}
 
 /* --- Стартова сторінка --- */
 #start-screen {
