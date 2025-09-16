@@ -169,7 +169,16 @@ const coffeeProfiles = [
   { name: "Colombia Cauca Popayan 250g", img: "images/colombia_cauca.png", link: "https://bfc24.com/uk/store/product/40", tags: { choco: 2, fruit: 1, espresso: 2 } },
   { name: "Mexico El Buho 250g", img: "images/mexico_el_buho.png", link: "https://bfc24.com/uk/store/product/38", tags: { choco: 1, dark: 1, espresso: 2, americano: 1 } }
 ];
+function chooseLanguage(lang) {
+  userLang = lang;
 
+  document.querySelector("#start-screen h2").textContent = startTranslations[lang].title;
+  document.querySelector("#start-screen p").textContent = startTranslations[lang].text;
+  document.querySelector("#startBtn").textContent = startTranslations[lang].button;
+
+  document.getElementById("lang-screen").classList.add("hidden");
+  document.getElementById("start-screen").classList.remove("hidden");
+}
 // --- Логіка ---
 let currentQ = 0;
 let userProfile = {};
