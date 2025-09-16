@@ -1,17 +1,23 @@
-// --- Language ---
+// --- Language (default EN) ---
 let userLang = "en";
 function selectLanguage(lang) {
   userLang = lang;
+
+  // сховати екран мов
   document.getElementById("lang-screen").classList.add("hidden");
 
+  // підставити тексти стартового екрану
   const startScreen = document.getElementById("start-screen");
   startScreen.querySelector("h2").textContent = startTranslations[lang].title;
   startScreen.querySelector("p").textContent = startTranslations[lang].text;
   document.getElementById("startBtn").textContent = startTranslations[lang].button;
   document.getElementById("main-title").textContent = startTranslations[lang].mainTitle;
 
+  // показати стартовий
   startScreen.classList.remove("hidden");
 }
+// зробити доступним для inline onclick у index.html
+window.selectLanguage = selectLanguage;
 
 // --- Start screen translations ---
 const startTranslations = {
@@ -103,42 +109,121 @@ const coffeeProfiles = [
   {name:"Arabusta Dark 250g",img:"images/dark.png",link:"https://bfc24.com/store/product/4",tags:{dark:3,espresso:3,cappuccino:2,moka:2}},
   {name:"Arabusta Amber 250g",img:"images/amber.png",link:"https://bfc24.com/store/product/5",tags:{dark:2,espresso:2,milk:2,cappuccino:2,americano:1,moka:1}},
   {name:"Decaf Colombia Huila 250g",img:"images/columbia_decaf.png",link:"https://bfc24.com/store/product/19",tags:{classic:2,espresso:2,milk:1,cappuccino:1,americano:1,immersion:1}},
-  {name:"Ethiopia Aleta Wondo 250g",img:"images/ethiopia_aleta.png",link:"https://bfc24.com/store/product/19",tags:{fruit:2,filter:2,espresso:1},category:"filter"},
+  {name:"Ethiopia Aleta Wondo 250g",img:"images/ethiopia_aleta.png",link:"https://bfc24.com/store/product/32",tags:{fruit:2,filter:2,espresso:1},category:"filter"}, // fixed link (was duplicate)
   {name:"Brazil Fazenda Pedra Grande 250g",img:"images/brazil_fazenda.png",link:"https://bfc24.com/store/product/23",tags:{choco:2,espresso:2,moka:1}},
   {name:"Colombia Cauca Popayan 250g",img:"images/colombia_cauca.png",link:"https://bfc24.com/store/product/25",tags:{choco:2,fruit:1,espresso:2}},
   {name:"Mexico El Buho 250g",img:"images/mexico_el_buho.png",link:"https://bfc24.com/store/product/22",tags:{choco:1,dark:1,espresso:2,americano:1}}
 ];
 
 // --- Logic ---
-let currentQ=0,userProfile={},selectedMethod=null,selectedDrink=null;
-const quizEl=document.getElementById("quiz"),resultEl=document.getElementById("result"),startScreen=document.getElementById("start-screen"),startBtn=document.getElementById("startBtn");
+let currentQ = 0;
+let userProfile = {};
+let selectedMethod = null;
+let selectedDrink = null;
 
-function addTags(tags){for(const[k,v]of Object.entries(tags)){if(!userProfile[k])userProfile[k]=0;userProfile[k]+=v;}}
+const quizEl = document.getElementById("quiz");
+const resultEl = document.getElementById("result");
+const startScreen = document.getElementById("start-screen");
+const startBtn = document.getElementById("startBtn");
+
+function addTags(tags){
+  for(const [k,v] of Object.entries(tags)){
+    if(!userProfile[k]) userProfile[k]=0;
+    userProfile[k]+=v;
+  }
+}
 
 function showQuestion(){
-  if(selectedMethod==="filter" && questions[currentQ].answers.some(a=>a.drink)){showResult();return;}
-  quizEl.innerHTML=`<h2>${questions[currentQ].text[userLang]}</h2>`;
-  const g=document.createElement("div");g.className="gallery";
+  // якщо метод = фільтр і поточне питання — про напій → пропускаємо напої, показуємо результат
+  if(selectedMethod==="filter" && questions[currentQ].answers.some(a=>a.drink)){
+    showResult(); return;
+  }
+
+  quizEl.innerHTML = `<h2>${questions[currentQ].text[userLang]}</h2>`;
+  const g = document.createElement("div");
+  g.className = "gallery";
+
   questions[currentQ].answers.forEach(a=>{
-    const card=document.createElement("div");card.className="gallery-item";
-    card.innerHTML=`<img src="${a.img}?t=${Date.now()}" alt=""><p>${a.text[userLang]}</p>`;
-    card.onclick=()=>{if(a.tags) addTags(a.tags);if(a.method) selectedMethod=a.method;if(a.drink) selectedDrink=a.drink;
-      currentQ++;if(currentQ<questions.length){showQuestion();}else{showResult();}};
+    const card = document.createElement("div");
+    card.className = "gallery-item";
+    card.innerHTML = `<img src="${a.img}?t=${Date.now()}" alt=""><p>${a.text[userLang]}</p>`;
+    card.onclick = ()=>{
+      if(a.tags) addTags(a.tags);
+      if(a.method) selectedMethod = a.method;
+      if(a.drink) selectedDrink = a.drink;
+
+      currentQ++;
+      if(currentQ < questions.length){ showQuestion(); }
+      else { showResult(); }
+    };
     g.appendChild(card);
-  });quizEl.appendChild(g);
+  });
+
+  quizEl.appendChild(g);
 }
 
 function showResult(){
-  let coffees=[...coffeeProfiles];
-  if(selectedMethod==="filter"){coffees=coffees.filter(c=>c.category==="filter");}
-  if(selectedDrink==="milk"||selectedDrink==="cappuccino"){coffees=coffees.filter(c=>c.category!=="filter");}
-  if(selectedDrink==="espresso"){if(Math.random()>0.1)coffees=coffees.filter(c=>c.category!=="filter");}
-  let scores=coffees.map(c=>{let s=0;for(const[t,w]of Object.entries(userProfile)){if(c.tags[t])s+=Math.min(w,c.tags[t]);}return{...c,score:s};});
-  scores.sort((a,b)=>b.score-a.score);
-  const main=scores[0],rec=scores.slice(1,3);
-  let html=`<h2>${main.name}</h2><img src="${main.img}?t=${Date.now()}" alt="${main.name}"><div class="final-phrase">${endPhrases[userLang][Math.floor(Math.random()*endPhrases[userLang].length)]}</div><a href="${main.link}?ref=quiz&t=${Date.now()}" target="_blank"><button>☕ ${userLang==="uk"?"Замовити":"Order"}</button></a>`;
-  if(rec.length>0){html+=`<h3>✨ ${userLang==="uk"?"Вам також може сподобатися:":"You may also like:"}</h3><div class="gallery">`;rec.forEach(c=>{html+=`<a href="${c.link}?ref=quiz&t=${Date.now()}" target="_blank" class="gallery-item"><img src="${c.img}?t=${Date.now()}" alt="${c.name}"><p>${c.name}</p></a>`;});html+=`</div>`;}
-  resultEl.innerHTML=html;quizEl.classList.add("hidden");resultEl.classList.remove("hidden");
+  let coffees = [...coffeeProfiles];
+
+  // суворе правило для фільтру: показуємо лише фільтр-кави
+  if(selectedMethod === "filter"){
+    coffees = coffees.filter(c=>c.category==="filter");
+  }
+
+  // якщо молочні напої → не показуємо фільтр-лоти
+  if(selectedDrink==="milk" || selectedDrink==="cappuccino"){
+    coffees = coffees.filter(c=>c.category!=="filter");
+  }
+
+  // для еспресо фільтр майже не показуємо (10% шанс)
+  if(selectedDrink==="espresso"){
+    if(Math.random()>0.1){
+      coffees = coffees.filter(c=>c.category!=="filter");
+    }
+  }
+
+  // підрахунок балів
+  const ranked = coffees.map(c=>{
+    let s=0;
+    for(const [tag,weight] of Object.entries(userProfile)){
+      if(c.tags[tag]) s += Math.min(weight, c.tags[tag]);
+    }
+    return {...c, score:s};
+  }).sort((a,b)=>b.score-a.score);
+
+  const main = ranked[0];
+  const rec = ranked.slice(1,3);
+
+  let html = `
+    <h2>${main.name}</h2>
+    <img src="${main.img}?t=${Date.now()}" alt="${main.name}">
+    <div class="final-phrase">${endPhrases[userLang][Math.floor(Math.random()*endPhrases[userLang].length)]}</div>
+    <a href="${main.link}?ref=quiz&t=${Date.now()}" target="_blank">
+      <button>☕ ${userLang==="uk" ? "Замовити" : "Order"}</button>
+    </a>
+  `;
+
+  if(rec.length>0){
+    html += `<h3>✨ ${userLang==="uk" ? "Вам також може сподобатися:" : "You may also like:"}</h3><div class="gallery">`;
+    rec.forEach(c=>{
+      html += `
+        <a href="${c.link}?ref=quiz&t=${Date.now()}" target="_blank" class="gallery-item">
+          <img src="${c.img}?t=${Date.now()}" alt="${c.name}">
+          <p>${c.name}</p>
+        </a>`;
+    });
+    html += `</div>`;
+  }
+
+  resultEl.innerHTML = html;
+  quizEl.classList.add("hidden");
+  resultEl.classList.remove("hidden");
 }
 
-startBtn.addEventListener("click",()=>{startScreen.classList.add("hidden");quizEl.classList.remove("hidden");showQuestion();});
+// старт після кліку
+startBtn.addEventListener("click", ()=>{
+  startScreen.classList.add("hidden");
+  quizEl.classList.remove("hidden");
+  currentQ = 0; userProfile = {}; selectedMethod = null; selectedDrink = null;
+  showQuestion();
+});
