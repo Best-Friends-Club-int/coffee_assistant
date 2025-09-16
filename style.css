@@ -1,3 +1,4 @@
+/* --- Base --- */
 body {
   font-family: 'Inter', Arial, sans-serif;
   text-align: center;
@@ -29,7 +30,25 @@ h3 {
   margin-top: 30px;
   margin-bottom: 15px;
 }
+
+.hidden {
+  display: none !important; /* надійне приховування */
+}
+
 /* --- Language screen --- */
+#lang-screen {
+  margin-top: 24px;
+  padding: 20px;
+  background: #FFF9E5;
+  border: 2px solid #FFE389;
+  border-radius: 12px;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
 #lang-screen h2 {
   margin-bottom: 20px;
   font-size: 22px;
@@ -39,12 +58,14 @@ h3 {
 .lang-buttons {
   display: flex;
   flex-direction: column;
-  gap: 12px; /* відстань між кнопками */
+  gap: 12px;              /* відстань між кнопками */
   margin: 0 auto;
-  max-width: 250px;
+  max-width: 260px;
+  width: 100%;
 }
 
 .lang-buttons button {
+  width: 100%;
   padding: 14px;
   font-size: 16px;
   border: none;
@@ -52,14 +73,20 @@ h3 {
   cursor: pointer;
   background-color: #009879;
   color: #fff;
-  transition: background 0.3s;
+  transition: background 0.3s, transform 0.2s;
 }
 
 .lang-buttons button:hover {
   background-color: #007a63;
+  transform: translateY(-1px);
 }
 
-/* --- Стартова сторінка --- */
+.lang-buttons button:focus-visible {
+  outline: 3px solid #FFE389;
+  outline-offset: 2px;
+}
+
+/* --- Start screen --- */
 #start-screen {
   margin-top: 40px;
   padding: 20px;
@@ -108,16 +135,57 @@ h3 {
   transform: scale(1.05);
 }
 
-/* --- Квіз --- */
+/* --- Quiz --- */
 #quiz {
   margin: 20px 0;
 }
 
-.hidden {
-  display: none;
+/* --- Options gallery --- */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 в ряд на десктопі */
+  gap: 16px;
+  margin-top: 15px;
 }
 
-/* --- Результат --- */
+.gallery-item {
+  height: 220px; /* уніфікована висота */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #00A582;
+  color: #fff;
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  padding: 12px;
+  transition: background 0.3s, transform 0.2s, color 0.3s;
+  text-decoration: none;
+}
+
+.gallery-item:hover {
+  background: #FFE389;
+  color: #282828;
+  transform: scale(1.05);
+}
+
+.gallery-item img {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;  /* без спотворення фото */
+  border-radius: 6px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.gallery-item p {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'Inter', Arial, sans-serif;
+}
+
+/* --- Result --- */
 #result {
   margin-top: 20px;
   padding: 20px;
@@ -154,7 +222,7 @@ h3 {
   margin: 12px auto;
 }
 
-/* кнопки */
+/* --- Buttons (global) --- */
 button {
   font-family: 'Geologica', Arial, sans-serif;
   font-weight: 600;
@@ -174,51 +242,7 @@ button:hover {
   transform: scale(1.05);
 }
 
-/* --- Галерея варіантів --- */
-.gallery {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 в ряд на десктопі */
-  gap: 16px;
-  margin-top: 15px;
-}
-
-.gallery-item {
-  height: 220px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: #00A582;
-  color: #fff;
-  border-radius: 8px;
-  text-align: center;
-  cursor: pointer;
-  padding: 12px;
-  transition: background 0.3s, transform 0.2s;
-  text-decoration: none;
-}
-
-.gallery-item:hover {
-  background: #FFE389;
-  color: #282828;
-  transform: scale(1.05);
-}
-
-.gallery-item img {
-  width: 100%;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: 8px;
-}
-
-.gallery-item p {
-  margin: 0;
-  font-size: 14px;
-  font-weight: 600;
-  font-family: 'Inter', Arial, sans-serif;
-}
-
-/* --- Фінальна фраза --- */
+/* --- Final phrase --- */
 .final-phrase {
   margin: 15px auto;
   padding: 12px 16px;
@@ -232,19 +256,17 @@ button:hover {
   animation: fadeIn 0.6s ease;
 }
 
-/* --- Анімація --- */
+/* --- Animations --- */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* --- Адаптивність --- */
-/* телефони та планшети — завжди 2 в ряд */
+/* --- Responsive: phones & tablets (always 2 per row) --- */
 @media (max-width: 768px) {
   .gallery {
     grid-template-columns: repeat(2, 1fr);
   }
-
   button, #startBtn {
     width: 100%;
   }
