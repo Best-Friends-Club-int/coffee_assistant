@@ -1,44 +1,32 @@
-// --- Language (default EN) ---
-let userLang = "en";
-function selectLanguage(lang) {
-  userLang = lang;
+<script>
+// ======================
+// Config: languages, UI
+// ======================
+const SUPPORTED_LANGS = ["uk","en","es","ru","pl"];
 
-  // сховати екран мов
-  document.getElementById("lang-screen").classList.add("hidden");
-
-  // підставити тексти стартового екрану
-  const startScreen = document.getElementById("start-screen");
-  startScreen.querySelector("h2").textContent = startTranslations[lang].title;
-  startScreen.querySelector("p").textContent = startTranslations[lang].text;
-  document.getElementById("startBtn").textContent = startTranslations[lang].button;
-  document.getElementById("main-title").textContent = startTranslations[lang].mainTitle;
-
-  // показати стартовий
-  startScreen.classList.remove("hidden");
-}
-// зробити доступним для inline onclick у index.html
-window.selectLanguage = selectLanguage;
-
-// --- Start screen translations ---
+// --- стартові тексти ---
 const startTranslations = {
-  uk: { mainTitle:"Твій кавовий настрій",title:"🤖 Наш кавовий AI-асистент допоможе знайти саме те, що тобі треба☕️",text:"Хочеш дізнатись, яка кава пасує саме твоєму настрою? Ми підкинемо ідею!",button:"🚀 Почати"},
-  en: { mainTitle:"Your Coffee Mood",title:"🤖 Our coffee AI assistant will help you find exactly what you need☕️",text:"Want to know which coffee matches your mood? We'll give you a hint!",button:"🚀 Let's go"},
-  es: { mainTitle:"Tu estado de ánimo cafetero",title:"🤖 Nuestro asistente de café con IA te ayudará a encontrar justo lo que necesitas☕️",text:"¿Quieres saber qué café combina con tu estado de ánimo? ¡Te daremos una idea!",button:"🚀 Empezar"},
-  ru: { mainTitle:"Твоё кофейное настроение",title:"🤖 Наш кофейный AI-ассистент поможет найти именно то, что тебе нужно☕️",text:"Хочешь узнать, какой кофе подходит твоему настроению? Мы подскажем идею!",button:"🚀 Начать"},
-  pl: { mainTitle:"Twój kawowy nastrój",title:"🤖 Nasz kawowy asystent AI pomoże Ci znaleźć dokładnie to, czego potrzebujesz☕️",text:"Chcesz wiedzieć, jaka kawa pasuje do Twojego nastroju? Podpowiemy Ci pomysł!",button:"🚀 Zaczynamy"}
+  uk: { mainTitle:"Твій кавовий настрій", title:"🤖 Наш кавовий AI-асистент допоможе знайти саме те, що тобі треба☕️", text:"Хочеш дізнатись, яка кава пасує саме твоєму настрою? Ми підкинемо ідею!", button:"🚀 Почати" },
+  en: { mainTitle:"Your Coffee Mood", title:"🤖 Our coffee AI assistant will help you find exactly what you need☕️", text:"Want to know which coffee matches your mood? We'll give you a hint!", button:"🚀 Let's go" },
+  es: { mainTitle:"Tu estado de ánimo cafetero", title:"🤖 Nuestro asistente de café con IA te ayudará a encontrar justo lo que necesitas☕️", text:"¿Quieres saber qué café combina con tu estado de ánimo? ¡Te daremos una idea!", button:"🚀 Empezar" },
+  ru: { mainTitle:"Твоё кофейное настроение", title:"🤖 Наш кофейный AI-ассистент поможет найти именно то, что тебе нужно☕️", text:"Хочешь узнать, какой кофе подходит твоему настроению? Мы подскажем идею!", button:"🚀 Начать" },
+  pl: { mainTitle:"Twój kawowy nastrój", title:"🤖 Nasz kawowy asystent AI pomoże Ci znaleźć dokładnie to, czego potrzebujesz☕️", text:"Chcesz wiedzieć, jaka kawa pasuje do Twojego nastroju? Podpowiemy Ci pomysł!", button:"🚀 Zaczynamy" }
 };
 
-// --- End phrases ---
+// --- фінальні фрази ---
 const endPhrases = {
-  uk:["😏 Чудовий вибір! Замов і зареєструйся в нашому клубі, щоб отримати ще більше!","🎯 У тебе чудовий смак!","☕ Оце результат!","😉 А тепер мершій реєструватися!","✨ У тебе є смак до життя!"],
-  en:["😏 Great choice!","🎯 You’ve got great taste!","☕ That’s the result!","😉 One of my favorites too!","✨ You clearly have a taste for life!"],
-  es:["😏 ¡Gran elección!","🎯 ¡Tienes un gran gusto!","☕ ¡Ese es el resultado!","😉 ¡También uno de mis favoritos!","✨ ¡Tienes buen gusto por la vida!"],
-  ru:["😏 Отличный выбор!","🎯 У тебя отличный вкус!","☕ Вот результат!","😉 И это один из моих любимых!","✨ У тебя есть вкус к жизни!"],
-  pl:["😏 Świetny wybór!","🎯 Masz świetny gust!","☕ Oto wynik!","😉 To też jeden z moich ulubionych!","✨ Masz smak do życia!"]
+  uk: ["😏 Чудовий вибір! Замов і зареєструйся в нашому клубі, щоб отримати ще більше!","🎯 У тебе чудовий смак! Час замовити каву та приєднатися до нашої спільноти!","☕ Оце результат! Придбай каву та ставай учасником клубу кавових ентузіастів.","😉 А тепер мершій реєструватися до нашої міжнародної спільноти кавоманів!","✨ У тебе є смак до життя! Розділи досвід з нами у клубі!"],
+  en: ["😏 Great choice! Order now and join our club for more perks!","🎯 You’ve got great taste! Time to order your coffee and join our community!","☕ That’s the result! Just one step left — grab your coffee and sign up!","😉 One of my favorites too! Join our international coffee club!","✨ You clearly have a taste for life! Share it with us in the club!"],
+  es: ["😏 ¡Gran elección! Pide ahora y únete a nuestro club para más beneficios!","🎯 ¡Tienes un gran gusto! Hora de pedir tu café y unirte a la comunidad!","☕ ¡Ese es el resultado! Solo queda un paso: pide tu café y regístrate!","😉 ¡También uno de mis favoritos! Únete a nuestro club internacional de café!","✨ ¡Tienes buen gusto por la vida! Compártelo con nosotros en el club!"],
+  ru: ["😏 Отличный выбор! Закажи и вступай в наш клуб, чтобы получить больше!","🎯 У тебя отличный вкус! Пора заказать кофе и присоединиться к сообществу!","☕ Вот результат! Остался один шаг — купи кофе и регистрируйся!","😉 И это один из моих любимых! Присоединяйся к международному клубу!","✨ У тебя есть вкус к жизни! Делись с нами в клубе!"],
+  pl: ["😏 Świetny wybór! Zamów i dołącz do naszego klubu, aby zyskać więcej!","🎯 Masz świetny gust! Czas zamówić kawę i dołączyć do społeczności!","☕ Oto wynik! Został tylko jeden krok — zamów kawę i zapisz się!","😉 To też jeden z moich ulubionych! Dołącz do naszego międzynarodowego klubu kawowego!","✨ Masz smak do życia! Podziel się nim z nami w klubie!"]
 };
 
-// --- Questions (fun + key) ---
+// ======================
+// Data: questions
+// ======================
 const questions = [
+  // fun
   { text:{uk:"🍰 Улюблений десерт дитинства?",en:"🍰 Childhood favorite dessert?",es:"🍰 Postre favorito de la infancia?",ru:"🍰 Любимый десерт из детства?",pl:"🍰 Ulubiony deser z dzieciństwa?"},
     answers:[
       {text:{uk:"Шоколадний торт",en:"Chocolate cake",es:"Pastel de chocolate",ru:"Шоколадный торт",pl:"Tort czekoladowy"},tags:{choco:2,espresso:1},img:"images/dessert_choco.png"},
@@ -81,6 +69,8 @@ const questions = [
       {text:{uk:"Затишний день вдома",en:"Cozy day at home",es:"Día en casa",ru:"Уютный день дома",pl:"Przytulny dzień w domu"},tags:{},img:"images/weekend_home.png"},
       {text:{uk:"Подорож у нове місто",en:"Travel to a new city",es:"Viaje a una nueva ciudad",ru:"Путешествие в новый город",pl:"Podróż do nowego miasta"},tags:{},img:"images/weekend_trip.png"}
     ]},
+
+  // ключові
   { text:{uk:"🫖 Який метод заварювання тобі ближче?",en:"🫖 Which brew method do you prefer?",es:"🫖 ¿Qué método de preparación prefieres?",ru:"🫖 Какой метод заваривания тебе ближе?",pl:"🫖 Jaki sposób parzenia wolisz?"},
     answers:[
       {text:{uk:"Фільтр (V60, Chemex)",en:"Filter (V60, Chemex)",es:"Filtro (V60, Chemex)",ru:"Фильтр (V60, Chemex)",pl:"Filtr (V60, Chemex)"},tags:{filter:3,fruit:1},method:"filter",img:"images/brew_filter.png"},
@@ -97,64 +87,140 @@ const questions = [
     ]}
 ];
 
-// --- Coffee profiles ---
+// ======================
+// Data: coffee profiles
+// ======================
 const coffeeProfiles = [
-  {name:"Ethiopia Gedeb 250g",img:"images/ethiopia_gadeb.png",link:"https://bfc24.com/store/product/26",tags:{fruit:2,filter:3,americano:1},category:"filter"},
-  {name:"Kenya AA Gikanda Kangocho 250g",img:"images/kenya_aa.png",link:"https://bfc24.com/store/product/27",tags:{fruit:2,filter:3,americano:1},category:"filter"},
-  {name:"Brazil Mogiana 250g",img:"images/brazil_mogiana.png",link:"https://bfc24.com/store/product/21",tags:{choco:2,espresso:3,milk:2,cappuccino:2,moka:1}},
-  {name:"Colombia Excelso 250g",img:"images/colombia_excleso.png",link:"https://bfc24.com/store/product/12",tags:{choco:2,espresso:2,milk:1,moka:1}},
-  {name:"Arabica Midday 250g",img:"images/midday.png",link:"https://bfc24.com/store/product/10",tags:{dessert:2,espresso:2,milk:2,cappuccino:2,moka:1}},
-  {name:"Arabica Midnight 250g",img:"images/midnight.png",link:"https://bfc24.com/store/product/6",tags:{choco:1,dessert:2,espresso:2,americano:1,immersion:1}},
-  {name:"Arabica Sunrise 250g",img:"images/sunrise.png",link:"https://bfc24.com/store/product/9",tags:{dessert:2,espresso:2,americano:1,milk:1,immersion:1,moka:1}},
-  {name:"Arabusta Dark 250g",img:"images/dark.png",link:"https://bfc24.com/store/product/4",tags:{dark:3,espresso:3,cappuccino:2,moka:2}},
-  {name:"Arabusta Amber 250g",img:"images/amber.png",link:"https://bfc24.com/store/product/5",tags:{dark:2,espresso:2,milk:2,cappuccino:2,americano:1,moka:1}},
-  {name:"Decaf Colombia Huila 250g",img:"images/columbia_decaf.png",link:"https://bfc24.com/store/product/19",tags:{classic:2,espresso:2,milk:1,cappuccino:1,americano:1,immersion:1}},
-  {name:"Ethiopia Aleta Wondo 250g",img:"images/ethiopia_aleta.png",link:"https://bfc24.com/store/product/32",tags:{fruit:2,filter:2,espresso:1},category:"filter"}, // fixed link (was duplicate)
-  {name:"Brazil Fazenda Pedra Grande 250g",img:"images/brazil_fazenda.png",link:"https://bfc24.com/store/product/23",tags:{choco:2,espresso:2,moka:1}},
-  {name:"Colombia Cauca Popayan 250g",img:"images/colombia_cauca.png",link:"https://bfc24.com/store/product/25",tags:{choco:2,fruit:1,espresso:2}},
-  {name:"Mexico El Buho 250g",img:"images/mexico_el_buho.png",link:"https://bfc24.com/store/product/22",tags:{choco:1,dark:1,espresso:2,americano:1}}
+  {name:"Ethiopia Gedeb 250g", img:"images/ethiopia_gadeb.png", link:"https://bfc24.com/store/product/26", tags:{fruit:2,filter:3,americano:1}, category:"filter"},
+  {name:"Kenya AA Gikanda Kangocho 250g", img:"images/kenya_aa.png", link:"https://bfc24.com/store/product/27", tags:{fruit:2,filter:3,americano:1}, category:"filter"},
+  {name:"Ethiopia Aleta Wondo 250g", img:"images/ethiopia_aleta.png", link:"https://bfc24.com/store/product/32", tags:{fruit:2,filter:2,espresso:1}, category:"filter"},
+
+  {name:"Brazil Mogiana 250g", img:"images/brazil_mogiana.png", link:"https://bfc24.com/store/product/21", tags:{choco:2,espresso:3,milk:2,cappuccino:2,moka:1}},
+  {name:"Colombia Excelso 250g", img:"images/colombia_excleso.png", link:"https://bfc24.com/store/product/12", tags:{choco:2,espresso:2,milk:1,moka:1}},
+  {name:"Arabica Midday 250g", img:"images/midday.png", link:"https://bfc24.com/store/product/10", tags:{dessert:2,espresso:2,milk:2,cappuccino:2,moka:1}},
+  {name:"Arabica Midnight 250g", img:"images/midnight.png", link:"https://bfc24.com/store/product/6",  tags:{choco:1,dessert:2,espresso:2,americano:1,immersion:1}},
+  {name:"Arabica Sunrise 250g", img:"images/sunrise.png", link:"https://bfc24.com/store/product/9",  tags:{dessert:2,espresso:2,americano:1,milk:1,immersion:1,moka:1}},
+  {name:"Arabusta Dark 250g", img:"images/dark.png", link:"https://bfc24.com/store/product/4",   tags:{dark:3,espresso:3,cappuccino:2,moka:2}},
+  {name:"Arabusta Amber 250g", img:"images/amber.png", link:"https://bfc24.com/store/product/5",  tags:{dark:2,espresso:2,milk:2,cappuccino:2,americano:1,moka:1}},
+  {name:"Decaf Colombia Huila 250g", img:"images/columbia_decaf.png", link:"https://bfc24.com/store/product/19", tags:{classic:2,espresso:2,milk:1,cappuccino:1,americano:1,immersion:1}},
+  {name:"Brazil Fazenda Pedra Grande 250g", img:"images/brazil_fazenda.png", link:"https://bfc24.com/store/product/23", tags:{choco:2,espresso:2,moka:1}},
+  {name:"Colombia Cauca Popayan 250g", img:"images/colombia_cauca.png", link:"https://bfc24.com/store/product/25", tags:{choco:2,fruit:1,espresso:2}},
+  {name:"Mexico El Buho 250g", img:"images/mexico_el_buho.png", link:"https://bfc24.com/store/product/22", tags:{choco:1,dark:1,espresso:2,americano:1}}
 ];
 
-// --- Logic ---
+// ======================
+// State
+// ======================
 let currentQ = 0;
 let userProfile = {};
 let selectedMethod = null;
-let selectedDrink = null;
+let selectedDrink  = null;
+let userLang = getInitialLang();
 
-const quizEl = document.getElementById("quiz");
-const resultEl = document.getElementById("result");
+// DOM
+const langScreen  = document.getElementById("lang-screen");
 const startScreen = document.getElementById("start-screen");
-const startBtn = document.getElementById("startBtn");
+const quizEl      = document.getElementById("quiz");
+const resultEl    = document.getElementById("result");
+const startBtn    = document.getElementById("startBtn");
+
+// ======================
+// Helpers
+// ======================
+function getInitialLang(){
+  const stored = localStorage.getItem("lang");
+  if (stored && SUPPORTED_LANGS.includes(stored)) return stored;
+  const nav = (navigator.language || "en").slice(0,2);
+  return SUPPORTED_LANGS.includes(nav) ? nav : "en";
+}
+
+function applyStartTexts(lang){
+  const mt = document.getElementById("main-title");
+  if (mt) mt.textContent = startTranslations[lang].mainTitle;
+  startScreen.querySelector("h2").textContent = startTranslations[lang].title;
+  startScreen.querySelector("p").textContent  = startTranslations[lang].text;
+  startBtn.textContent = startTranslations[lang].button;
+}
+
+function selectLanguage(lang){
+  userLang = SUPPORTED_LANGS.includes(lang) ? lang : "en";
+  localStorage.setItem("lang", userLang);
+  if (langScreen) langScreen.classList.add("hidden");
+  applyStartTexts(userLang);
+  startScreen.classList.remove("hidden");
+}
 
 function addTags(tags){
-  for(const [k,v] of Object.entries(tags)){
-    if(!userProfile[k]) userProfile[k]=0;
-    userProfile[k]+=v;
+  for (const [k,v] of Object.entries(tags||{})){
+    if (!userProfile[k]) userProfile[k] = 0;
+    userProfile[k] += v;
   }
 }
 
+function t(obj){
+  // безпечно беремо текст: поточна мова → en → перше доступне значення
+  if (obj[userLang]) return obj[userLang];
+  if (obj.en)        return obj.en;
+  const first = Object.values(obj)[0];
+  return typeof first === "string" ? first : "";
+}
+
+// --- Referral & anti-cache ---
+const REF_PARAM = "ref";
+const DEFAULT_REF = "quiz";
+
+(function persistRefAtLoad(){
+  const ref = new URLSearchParams(location.search).get(REF_PARAM);
+  if (ref) localStorage.setItem("ref", ref);
+})();
+
+function getRef(){
+  const fromUrl = new URLSearchParams(location.search).get(REF_PARAM);
+  const fromLS  = localStorage.getItem("ref");
+  const ref = fromUrl || fromLS || DEFAULT_REF;
+  localStorage.setItem("ref", ref);
+  return ref;
+}
+
+function adjustLink(baseLink){
+  const url = new URL(baseLink);
+  url.searchParams.set(REF_PARAM, getRef());
+  url.searchParams.set("t", Date.now().toString());
+  return url.toString();
+}
+
+// ======================
+// Quiz flow
+// ======================
 function showQuestion(){
-  // якщо метод = фільтр і поточне питання — про напій → пропускаємо напої, показуємо результат
-  if(selectedMethod==="filter" && questions[currentQ].answers.some(a=>a.drink)){
-    showResult(); return;
+  // якщо користувач вибрав filter → пропускаємо питання про напій
+  if (selectedMethod === "filter" && questions[currentQ].answers.some(a=>a.drink)){
+    showResult();
+    return;
   }
 
-  quizEl.innerHTML = `<h2>${questions[currentQ].text[userLang]}</h2>`;
+  quizEl.innerHTML = `<h2>${t(questions[currentQ].text)}</h2>`;
   const g = document.createElement("div");
   g.className = "gallery";
 
   questions[currentQ].answers.forEach(a=>{
     const card = document.createElement("div");
     card.className = "gallery-item";
-    card.innerHTML = `<img src="${a.img}?t=${Date.now()}" alt=""><p>${a.text[userLang]}</p>`;
+    card.innerHTML  = `
+      <img src="${a.img}?t=${Date.now()}" alt="">
+      <p>${t(a.text)}</p>
+    `;
     card.onclick = ()=>{
-      if(a.tags) addTags(a.tags);
-      if(a.method) selectedMethod = a.method;
-      if(a.drink) selectedDrink = a.drink;
+      addTags(a.tags);
+      if (a.method) selectedMethod = a.method;
+      if (a.drink)  selectedDrink  = a.drink;
 
       currentQ++;
-      if(currentQ < questions.length){ showQuestion(); }
-      else { showResult(); }
+      if (currentQ < questions.length) {
+        showQuestion();
+      } else {
+        showResult();
+      }
     };
     g.appendChild(card);
   });
@@ -165,52 +231,87 @@ function showQuestion(){
 function showResult(){
   let coffees = [...coffeeProfiles];
 
-  // суворе правило для фільтру: показуємо лише фільтр-кави
-  if(selectedMethod === "filter"){
-    coffees = coffees.filter(c=>c.category==="filter");
-  }
+  // якщо метод = filter → показуємо рівно 2 фільтри (основний + другий)
+  if (selectedMethod === "filter"){
+    const filters = coffees.filter(c=>c.category === "filter");
+    // підрахунок за профілем, щоб основний відповідав смакам
+    const ranked = filters.map(c=>{
+      let s = 0;
+      for(const [tag,weight] of Object.entries(userProfile)){
+        if (c.tags[tag]) s += Math.min(weight, c.tags[tag]);
+      }
+      return {...c, score:s};
+    }).sort((a,b)=>b.score-a.score);
 
-  // якщо молочні напої → не показуємо фільтр-лоти
-  if(selectedDrink==="milk" || selectedDrink==="cappuccino"){
-    coffees = coffees.filter(c=>c.category!=="filter");
-  }
+    const main = ranked[0] || filters[0];
+    const alt  = ranked.find(x=>x.name !== main.name) || filters[1];
 
-  // для еспресо фільтр майже не показуємо (10% шанс)
-  if(selectedDrink==="espresso"){
-    if(Math.random()>0.1){
-      coffees = coffees.filter(c=>c.category!=="filter");
+    let html = `
+      <h2>${main.name}</h2>
+      <img src="${main.img}?t=${Date.now()}" alt="${main.name}">
+      <div class="final-phrase">${endPhrases[userLang][Math.floor(Math.random()*endPhrases[userLang].length)]}</div>
+      <a href="${adjustLink(main.link)}" target="_blank" rel="noopener">
+        <button>☕ ${userLang==="uk"?"Замовити":"Order"}</button>
+      </a>
+    `;
+
+    if (alt){
+      html += `
+        <h3>✨ ${userLang==="uk"?"Вам також може сподобатися:":"You may also like:"}</h3>
+        <div class="gallery">
+          <a href="${adjustLink(alt.link)}" target="_blank" rel="noopener" class="gallery-item">
+            <img src="${alt.img}?t=${Date.now()}" alt="${alt.name}">
+            <p>${alt.name}</p>
+          </a>
+        </div>
+      `;
     }
+
+    resultEl.innerHTML = html;
+    quizEl.classList.add("hidden");
+    resultEl.classList.remove("hidden");
+    return;
   }
 
-  // підрахунок балів
+  // у milk/cappuccino фільтр-кави не показуємо
+  if (selectedDrink === "milk" || selectedDrink === "cappuccino"){
+    coffees = coffees.filter(c=>c.category !== "filter");
+  }
+  // у espresso фільтр рідко (10%)
+  if (selectedDrink === "espresso"){
+    if (Math.random() > 0.1) coffees = coffees.filter(c=>c.category !== "filter");
+  }
+
+  // ранжування
   const ranked = coffees.map(c=>{
-    let s=0;
+    let s = 0;
     for(const [tag,weight] of Object.entries(userProfile)){
-      if(c.tags[tag]) s += Math.min(weight, c.tags[tag]);
+      if (c.tags[tag]) s += Math.min(weight, c.tags[tag]);
     }
     return {...c, score:s};
   }).sort((a,b)=>b.score-a.score);
 
   const main = ranked[0];
-  const rec = ranked.slice(1,3);
+  const rec  = ranked.slice(1,3);
 
   let html = `
     <h2>${main.name}</h2>
     <img src="${main.img}?t=${Date.now()}" alt="${main.name}">
     <div class="final-phrase">${endPhrases[userLang][Math.floor(Math.random()*endPhrases[userLang].length)]}</div>
-    <a href="${main.link}?ref=quiz&t=${Date.now()}" target="_blank">
-      <button>☕ ${userLang==="uk" ? "Замовити" : "Order"}</button>
+    <a href="${adjustLink(main.link)}" target="_blank" rel="noopener">
+      <button>☕ ${userLang==="uk"?"Замовити":"Order"}</button>
     </a>
   `;
 
-  if(rec.length>0){
-    html += `<h3>✨ ${userLang==="uk" ? "Вам також може сподобатися:" : "You may also like:"}</h3><div class="gallery">`;
+  if (rec.length){
+    html += `<h3>✨ ${userLang==="uk"?"Вам також може сподобатися:":"You may also like:"}</h3><div class="gallery">`;
     rec.forEach(c=>{
       html += `
-        <a href="${c.link}?ref=quiz&t=${Date.now()}" target="_blank" class="gallery-item">
+        <a href="${adjustLink(c.link)}" target="_blank" rel="noopener" class="gallery-item">
           <img src="${c.img}?t=${Date.now()}" alt="${c.name}">
           <p>${c.name}</p>
-        </a>`;
+        </a>
+      `;
     });
     html += `</div>`;
   }
@@ -220,10 +321,45 @@ function showResult(){
   resultEl.classList.remove("hidden");
 }
 
-// старт після кліку
-startBtn.addEventListener("click", ()=>{
-  startScreen.classList.add("hidden");
-  quizEl.classList.remove("hidden");
-  currentQ = 0; userProfile = {}; selectedMethod = null; selectedDrink = null;
-  showQuestion();
+// ======================
+// Boot
+// ======================
+document.addEventListener("DOMContentLoaded", () => {
+  // якщо є екран мов — показуємо його; якщо нема — одразу стартовий з автодетектом
+  if (langScreen) {
+    // проставимо дефолтні тексти на старті на випадок, якщо юзер пропустить
+    applyStartTexts(userLang);
+    // кнопки вибору мов (мають атрибути data-lang)
+    const langBtns = langScreen.querySelectorAll("[data-lang]");
+    langBtns.forEach(btn=>{
+      btn.addEventListener("click", ()=>{
+        const lang = btn.getAttribute("data-lang");
+        selectLanguage(lang);
+      });
+    });
+    // показати екран мов, приховати старт
+    langScreen.classList.remove("hidden");
+    startScreen.classList.add("hidden");
+  } else {
+    // без екрану мов — автоматичний текст і стартовий екран
+    applyStartTexts(userLang);
+    startScreen.classList.remove("hidden");
+  }
+
+  // старт кнопка
+  if (startBtn){
+    startBtn.addEventListener("click", ()=>{
+      // скидання стану на випадок повторного запуску
+      currentQ = 0;
+      userProfile = {};
+      selectedMethod = null;
+      selectedDrink  = null;
+
+      startScreen.classList.add("hidden");
+      resultEl.classList.add("hidden");
+      quizEl.classList.remove("hidden");
+      showQuestion();
+    });
+  }
 });
+</script>
