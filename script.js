@@ -1,5 +1,5 @@
-// --- Мова за замовчуванням ---
-let userLang = "en"; // дефолт
+// --- Визначення мови ---
+let userLang = (navigator.language || navigator.userLanguage || "en").slice(0, 2);
 if (!["uk", "en", "es", "ru", "pl"].includes(userLang)) userLang = "en";
 
 // --- Переклади стартового екрану ---
@@ -36,7 +36,7 @@ const startTranslations = {
   }
 };
 
-// --- Фінальні фрази ---
+// --- Фрази для фіналу ---
 const endPhrases = {
   uk: [
     "😏 Чудовий вибір! Замов і зареєструйся в нашому клубі, щоб отримати ще більше!",
@@ -75,7 +75,7 @@ const endPhrases = {
   ]
 };
 
-// --- Питання (включно з фан-питаннями) ---
+// --- Питання ---
 const questions = [
   {
     text: { uk: "🍰 Улюблений десерт дитинства?", en: "🍰 Childhood favorite dessert?", es: "🍰 Postre favorito de la infancia?", ru: "🍰 Любимый десерт из детства?", pl: "🍰 Ulubiony deser z dzieciństwa?" },
@@ -104,7 +104,6 @@ const questions = [
       { text: { uk: "Деревні/пряні", en: "Woody/spicy", es: "Amaderados/especiados", ru: "Древесные/пряные", pl: "Drzewne/pikantne" }, tags: { dark: 2 }, img: "images/perfume_wood.png" }
     ]
   },
-  // --- фан-питання ---
   {
     text: { uk: "☀️ Яка сцена тобі ближча?", en: "☀️ Which scene is closer to you?", es: "☀️ ¿Qué escena te gusta más?", ru: "☀️ Какая сцена ближе тебе?", pl: "☀️ Jaka scena jest ci bliższa?" },
     answers: [
@@ -132,7 +131,6 @@ const questions = [
       { text: { uk: "Подорож у нове місто", en: "Travel to a new city", es: "Viaje a una nueva ciudad", ru: "Путешествие в новый город", pl: "Podróż do nowego miasta" }, tags: {}, img: "images/weekend_trip.png" }
     ]
   },
-  // --- ключові питання ---
   {
     text: { uk: "🫖 Який метод заварювання тобі ближче?", en: "🫖 Which brew method do you prefer?", es: "🫖 ¿Qué método de preparación prefieres?", ru: "🫖 Какой метод заваривания тебе ближе?", pl: "🫖 Jaki sposób parzenia wolisz?" },
     answers: [
@@ -177,21 +175,10 @@ let userProfile = {};
 let selectedMethod = null;
 let selectedDrink = null;
 
-// Елементи
+const quizEl = document.getElementById("quiz");
+const resultEl = document.getElementById("result");
+const startScreen = document.getElementById("start-screen");
 const startBtn = document.getElementById("startBtn");
-
-// --- Вибір мови ---
-function selectLanguage(lang) {
-  userLang = lang;
-
-  document.getElementById("main-title").textContent = startTranslations[lang].mainTitle;
-  startScreen.querySelector("h2").textContent = startTranslations[lang].title;
-  startScreen.querySelector("p").textContent = startTranslations[lang].text;
-  startBtn.textContent = startTranslations[lang].button;
-
-  document.getElementById("lang-screen").classList.add("hidden");
-  startScreen.classList.remove("hidden");
-}
 
 function addTags(tags) {
   for (const [key, value] of Object.entries(tags)) {
@@ -201,11 +188,6 @@ function addTags(tags) {
 }
 
 function showQuestion() {
-  if (selectedMethod === "filter" && questions[currentQ].answers.some(a => a.drink)) {
-    showResult();
-    return;
-  }
-
   quizEl.innerHTML = `<h2>${questions[currentQ].text[userLang]}</h2>`;
   const gallery = document.createElement("div");
   gallery.className = "gallery";
@@ -213,14 +195,17 @@ function showQuestion() {
   questions[currentQ].answers.forEach(a => {
     const card = document.createElement("div");
     card.className = "gallery-item";
-    card.innerHTML = `<img src="${a.img}?t=${Date.now()}" alt=""><p>${a.text[userLang]}</p>`;
+    card.innerHTML = `<img src="${a.img}?t=${Date.now()}"><p>${a.text[userLang]}</p>`;
     card.onclick = () => {
       if (a.tags) addTags(a.tags);
       if (a.method) selectedMethod = a.method;
       if (a.drink) selectedDrink = a.drink;
 
       currentQ++;
-      if (currentQ < questions.length) {
+
+      if (selectedMethod === "filter") {
+        showResult();
+      } else if (currentQ < questions.length) {
         showQuestion();
       } else {
         showResult();
@@ -232,11 +217,6 @@ function showQuestion() {
   quizEl.appendChild(gallery);
 }
 
-function adjustLink(baseLink) {
-  const ref = new URLSearchParams(window.location.search).get("ref") || "default";
-  return `${baseLink}?ref=${ref}&t=${Date.now()}`;
-}
-
 function showResult() {
   let coffees = [...coffeeProfiles];
 
@@ -245,21 +225,19 @@ function showResult() {
     const main = filterCoffees[0];
     const alt = filterCoffees[1];
 
-    let html = `
-      <h2>${main.name}</h2>
+    let html = `<h2>${main.name}</h2>
       <img src="${main.img}?t=${Date.now()}" alt="${main.name}">
       <div class="final-phrase">${endPhrases[userLang][Math.floor(Math.random() * endPhrases[userLang].length)]}</div>
-      <a href="${adjustLink(main.link)}" target="_blank"><button>☕ ${userLang === "uk" ? "Замовити" : "Order"}</button></a>
-    `;
+      <a href="${main.link}" target="_blank"><button>☕ ${userLang === "uk" ? "Замовити" : "Order"}</button></a>`;
 
     if (alt) {
       html += `<h3>✨ ${userLang === "uk" ? "Вам також може сподобатися:" : "You may also like:"}</h3>
-      <div class="gallery">
-        <a href="${adjustLink(alt.link)}" target="_blank" class="gallery-item">
-          <img src="${alt.img}?t=${Date.now()}" alt="${alt.name}">
-          <p>${alt.name}</p>
-        </a>
-      </div>`;
+        <div class="gallery">
+          <a href="${alt.link}" target="_blank" class="gallery-item">
+            <img src="${alt.img}?t=${Date.now()}" alt="${alt.name}">
+            <p>${alt.name}</p>
+          </a>
+        </div>`;
     }
 
     resultEl.innerHTML = html;
@@ -271,7 +249,6 @@ function showResult() {
   if (selectedDrink === "milk" || selectedDrink === "cappuccino") {
     coffees = coffees.filter(c => c.category !== "filter");
   }
-
   if (selectedDrink === "espresso") {
     if (Math.random() > 0.1) {
       coffees = coffees.filter(c => c.category !== "filter");
@@ -290,21 +267,18 @@ function showResult() {
   const mainCoffee = scores[0];
   const rec = scores.slice(1, 3);
 
-  let html = `
-    <h2>${mainCoffee.name}</h2>
+  let html = `<h2>${mainCoffee.name}</h2>
     <img src="${mainCoffee.img}?t=${Date.now()}" alt="${mainCoffee.name}">
     <div class="final-phrase">${endPhrases[userLang][Math.floor(Math.random() * endPhrases[userLang].length)]}</div>
-    <a href="${adjustLink(mainCoffee.link)}" target="_blank"><button>☕ ${userLang === "uk" ? "Замовити" : "Order"}</button></a>
-  `;
+    <a href="${mainCoffee.link}" target="_blank"><button>☕ ${userLang === "uk" ? "Замовити" : "Order"}</button></a>`;
 
   if (rec.length > 0) {
     html += `<h3>✨ ${userLang === "uk" ? "Вам також може сподобатися:" : "You may also like:"}</h3><div class="gallery">`;
     rec.forEach(c => {
-      html += `
-        <a href="${adjustLink(c.link)}" target="_blank" class="gallery-item">
-          <img src="${c.img}?t=${Date.now()}" alt="${c.name}">
-          <p>${c.name}</p>
-        </a>`;
+      html += `<a href="${c.link}" target="_blank" class="gallery-item">
+        <img src="${c.img}?t=${Date.now()}" alt="${c.name}">
+        <p>${c.name}</p>
+      </a>`;
     });
     html += `</div>`;
   }
