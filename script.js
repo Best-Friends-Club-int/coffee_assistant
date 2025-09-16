@@ -169,41 +169,32 @@ const coffeeProfiles = [
   { name: "Colombia Cauca Popayan 250g", img: "images/colombia_cauca.png", link: "https://bfc24.com/uk/store/product/40", tags: { choco: 2, fruit: 1, espresso: 2 } },
   { name: "Mexico El Buho 250g", img: "images/mexico_el_buho.png", link: "https://bfc24.com/uk/store/product/38", tags: { choco: 1, dark: 1, espresso: 2, americano: 1 } }
 ];
-function chooseLanguage(lang) {
-  userLang = lang;
 
-  document.querySelector("#start-screen h2").textContent = startTranslations[lang].title;
-  document.querySelector("#start-screen p").textContent = startTranslations[lang].text;
-  document.querySelector("#startBtn").textContent = startTranslations[lang].button;
-
-  document.getElementById("lang-screen").classList.add("hidden");
-  document.getElementById("start-screen").classList.remove("hidden");
-}
 // --- Логіка ---
 let currentQ = 0;
 let userProfile = {};
 let selectedMethod = null;
 let selectedDrink = null;
 
-let userCountry = "UA";
-fetch("https://ipapi.co/json/")
-  .then(res => res.json())
-  .then(data => { if (data && data.country_code) userCountry = data.country_code; })
-  .catch(() => userCountry = "UA");
-
+// Елементи
+const langScreen = document.getElementById("lang-screen");
+const startScreen = document.getElementById("start-screen");
 const quizEl = document.getElementById("quiz");
 const resultEl = document.getElementById("result");
-const startScreen = document.getElementById("start-screen");
 const startBtn = document.getElementById("startBtn");
 
-// --- Локалізація стартового екрану ---
-document.addEventListener("DOMContentLoaded", () => {
-  const tr = startTranslations[userLang];
-  document.getElementById("main-title").innerText = tr.mainTitle;
-  startScreen.querySelector("h2").innerText = tr.title;
-  startScreen.querySelector("p").innerText = tr.text;
-  startBtn.innerText = tr.button;
-});
+// --- Вибір мови ---
+function selectLanguage(lang) {
+  userLang = lang;
+  langScreen.classList.add("hidden");
+
+  // Тексти стартового екрану
+  startScreen.querySelector("h2").textContent = startTranslations[lang].title;
+  startScreen.querySelector("p").textContent = startTranslations[lang].text;
+  startBtn.textContent = startTranslations[lang].button;
+
+  startScreen.classList.remove("hidden");
+}
 
 function addTags(tags) {
   for (const [key, value] of Object.entries(tags)) {
