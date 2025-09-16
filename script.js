@@ -1,5 +1,5 @@
-// --- Визначення мови ---
-let userLang = (navigator.language || navigator.userLanguage || "en").slice(0, 2);
+// --- Мова за замовчуванням ---
+let userLang = "en"; // дефолт
 if (!["uk", "en", "es", "ru", "pl"].includes(userLang)) userLang = "en";
 
 // --- Переклади стартового екрану ---
@@ -36,7 +36,7 @@ const startTranslations = {
   }
 };
 
-// --- Фрази для фіналу ---
+// --- Фінальні фрази ---
 const endPhrases = {
   uk: [
     "😏 Чудовий вибір! Замов і зареєструйся в нашому клубі, щоб отримати ще більше!",
@@ -75,7 +75,7 @@ const endPhrases = {
   ]
 };
 
-// --- Питання ---
+// --- Питання (включно з фан-питаннями) ---
 const questions = [
   {
     text: { uk: "🍰 Улюблений десерт дитинства?", en: "🍰 Childhood favorite dessert?", es: "🍰 Postre favorito de la infancia?", ru: "🍰 Любимый десерт из детства?", pl: "🍰 Ulubiony deser z dzieciństwa?" },
@@ -104,34 +104,35 @@ const questions = [
       { text: { uk: "Деревні/пряні", en: "Woody/spicy", es: "Amaderados/especiados", ru: "Древесные/пряные", pl: "Drzewne/pikantne" }, tags: { dark: 2 }, img: "images/perfume_wood.png" }
     ]
   },
-
-{
-  text: { uk: "☀️ Яка сцена тобі ближча?", en: "☀️ Which scene is closer to you?", es: "☀️ ¿Qué escena te gusta más?", ru: "☀️ Какая сцена ближе тебе?", pl: "☀️ Jaka scena jest ci bliższa?" },
-  answers: [
-    { text: { uk: "Середземна фієста", en: "Mediterranean fiesta", es: "Fiesta mediterránea", ru: "Средиземная фиеста", pl: "Fiesta śródziemnomorska" }, tags: {}, img: "images/scene_fiesta.png" },
-    { text: { uk: "Прогулянка після дощу", en: "Walk after rain", es: "Paseo después de la lluvia", ru: "Прогулка после дождя", pl: "Spacer po deszczu" }, tags: {}, img: "images/scene_rain.png" },
-    { text: { uk: "Затишний плед і книга", en: "Cozy blanket & book", es: "Manta y libro", ru: "Уютный плед и книга", pl: "Koc i książka" }, tags: {}, img: "images/scene_book.png" },
-    { text: { uk: "Ранковий коворкінг", en: "Morning coworking", es: "Coworking matutino", ru: "Утренний коворкинг", pl: "Poranny coworking" }, tags: {}, img: "images/scene_cowork.png" }
-  ]
-},
-{
-  text: { uk: "🍸 Який коктейль твій улюблений?", en: "🍸 Your favorite cocktail?", es: "🍸 Tu cóctel favorito?", ru: "🍸 Твой любимый коктейль?", pl: "🍸 Twój ulubiony koktajl?" },
-  answers: [
-    { text: { uk: "Апероль Шприц", en: "Aperol Spritz", es: "Aperol Spritz", ru: "Апероль Шприц", pl: "Aperol Spritz" }, tags: {}, img: "images/cocktail_aperol.png" },
-    { text: { uk: "Мохіто", en: "Mojito", es: "Mojito", ru: "Мохито", pl: "Mojito" }, tags: {}, img: "images/cocktail_mojito.png" },
-    { text: { uk: "Віскі-кола", en: "Whiskey-cola", es: "Whisky-cola", ru: "Виски-кола", pl: "Whiskey-cola" }, tags: {}, img: "images/cocktail_whiskey.png" },
-    { text: { uk: "Еспресо мартіні", en: "Espresso martini", es: "Espresso martini", ru: "Эспрессо мартини", pl: "Espresso martini" }, tags: {}, img: "images/cocktail_espresso.png" }
-  ]
-},
-{
-  text: { uk: "🌿 Як ти любиш проводити вихідні?", en: "🌿 How do you prefer weekends?", es: "🌿 ¿Cómo prefieres pasar los fines de semana?", ru: "🌿 Как ты любишь проводить выходные?", pl: "🌿 Jak wolisz spędzać weekendy?" },
-  answers: [
-    { text: { uk: "Прогулянка", en: "Walk", es: "Paseo", ru: "Прогулка", pl: "Spacer" }, tags: {}, img: "images/weekend_nature.png" },
-    { text: { uk: "Вечірка з друзями", en: "Party with friends", es: "Fiesta con amigos", ru: "Вечеринка с друзьями", pl: "Impreza z przyjaciółmi" }, tags: {}, img: "images/weekend_party.png" },
-    { text: { uk: "Затишний день вдома", en: "Cozy day at home", es: "Día en casa", ru: "Уютный день дома", pl: "Przytulny dzień w domu" }, tags: {}, img: "images/weekend_home.png" },
-    { text: { uk: "Подорож у нове місто", en: "Travel to a new city", es: "Viaje a una nueva ciudad", ru: "Путешествие в новый город", pl: "Podróż do nowego miasta" }, tags: {}, img: "images/weekend_trip.png" }
-  ]
-},
+  // --- фан-питання ---
+  {
+    text: { uk: "☀️ Яка сцена тобі ближча?", en: "☀️ Which scene is closer to you?", es: "☀️ ¿Qué escena te gusta más?", ru: "☀️ Какая сцена ближе тебе?", pl: "☀️ Jaka scena jest ci bliższa?" },
+    answers: [
+      { text: { uk: "Середземна фієста", en: "Mediterranean fiesta", es: "Fiesta mediterránea", ru: "Средиземная фиеста", pl: "Fiesta śródziemnomorska" }, tags: {}, img: "images/scene_fiesta.png" },
+      { text: { uk: "Прогулянка після дощу", en: "Walk after rain", es: "Paseo después de la lluvia", ru: "Прогулка после дождя", pl: "Spacer po deszczu" }, tags: {}, img: "images/scene_rain.png" },
+      { text: { uk: "Затишний плед і книга", en: "Cozy blanket & book", es: "Manta y libro", ru: "Уютный плед и книга", pl: "Koc i książka" }, tags: {}, img: "images/scene_book.png" },
+      { text: { uk: "Ранковий коворкінг", en: "Morning coworking", es: "Coworking matutino", ru: "Утренний коворкинг", pl: "Poranny coworking" }, tags: {}, img: "images/scene_cowork.png" }
+    ]
+  },
+  {
+    text: { uk: "🍸 Який коктейль твій улюблений?", en: "🍸 Your favorite cocktail?", es: "🍸 Tu cóctel favorito?", ru: "🍸 Твой любимый коктейль?", pl: "🍸 Twój ulubiony koktajl?" },
+    answers: [
+      { text: { uk: "Апероль Шприц", en: "Aperol Spritz", es: "Aperol Spritz", ru: "Апероль Шприц", pl: "Aperol Spritz" }, tags: {}, img: "images/cocktail_aperol.png" },
+      { text: { uk: "Мохіто", en: "Mojito", es: "Mojito", ru: "Мохито", pl: "Mojito" }, tags: {}, img: "images/cocktail_mojito.png" },
+      { text: { uk: "Віскі-кола", en: "Whiskey-cola", es: "Whisky-cola", ru: "Виски-кола", pl: "Whiskey-cola" }, tags: {}, img: "images/cocktail_whiskey.png" },
+      { text: { uk: "Еспресо мартіні", en: "Espresso martini", es: "Espresso martini", ru: "Эспрессо мартини", pl: "Espresso martini" }, tags: {}, img: "images/cocktail_espresso.png" }
+    ]
+  },
+  {
+    text: { uk: "🌿 Як ти любиш проводити вихідні?", en: "🌿 How do you prefer weekends?", es: "🌿 ¿Cómo prefieres pasar los fines de semana?", ru: "🌿 Как ты любишь проводить выходные?", pl: "🌿 Jak wolisz spędzać weekendy?" },
+    answers: [
+      { text: { uk: "Прогулянка", en: "Walk", es: "Paseo", ru: "Прогулка", pl: "Spacer" }, tags: {}, img: "images/weekend_nature.png" },
+      { text: { uk: "Вечірка з друзями", en: "Party with friends", es: "Fiesta con amigos", ru: "Вечеринка с друзьями", pl: "Impreza z przyjaciółmi" }, tags: {}, img: "images/weekend_party.png" },
+      { text: { uk: "Затишний день вдома", en: "Cozy day at home", es: "Día en casa", ru: "Уютный день дома", pl: "Przytulny dzień w domu" }, tags: {}, img: "images/weekend_home.png" },
+      { text: { uk: "Подорож у нове місто", en: "Travel to a new city", es: "Viaje a una nueva ciudad", ru: "Путешествие в новый город", pl: "Podróż do nowego miasta" }, tags: {}, img: "images/weekend_trip.png" }
+    ]
+  },
+  // --- ключові питання ---
   {
     text: { uk: "🫖 Який метод заварювання тобі ближче?", en: "🫖 Which brew method do you prefer?", es: "🫖 ¿Qué método de preparación prefieres?", ru: "🫖 Какой метод заваривания тебе ближе?", pl: "🫖 Jaki sposób parzenia wolisz?" },
     answers: [
@@ -177,22 +178,18 @@ let selectedMethod = null;
 let selectedDrink = null;
 
 // Елементи
-const langScreen = document.getElementById("lang-screen");
-const startScreen = document.getElementById("start-screen");
-const quizEl = document.getElementById("quiz");
-const resultEl = document.getElementById("result");
 const startBtn = document.getElementById("startBtn");
 
 // --- Вибір мови ---
 function selectLanguage(lang) {
   userLang = lang;
-  langScreen.classList.add("hidden");
 
-  // Тексти стартового екрану
+  document.getElementById("main-title").textContent = startTranslations[lang].mainTitle;
   startScreen.querySelector("h2").textContent = startTranslations[lang].title;
   startScreen.querySelector("p").textContent = startTranslations[lang].text;
   startBtn.textContent = startTranslations[lang].button;
 
+  document.getElementById("lang-screen").classList.add("hidden");
   startScreen.classList.remove("hidden");
 }
 
@@ -237,15 +234,12 @@ function showQuestion() {
 
 function adjustLink(baseLink) {
   const ref = new URLSearchParams(window.location.search).get("ref") || "default";
-  let link = baseLink;
-  if (userCountry !== "UA") link = link.replace("/uk", "");
-  return `${link}?ref=${ref}&t=${Date.now()}`;
+  return `${baseLink}?ref=${ref}&t=${Date.now()}`;
 }
 
 function showResult() {
   let coffees = [...coffeeProfiles];
 
-  // --- якщо метод = filter ---
   if (selectedMethod === "filter") {
     const filterCoffees = coffees.filter(c => c.category === "filter");
     const main = filterCoffees[0];
