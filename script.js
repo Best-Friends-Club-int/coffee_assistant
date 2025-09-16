@@ -154,20 +154,20 @@ const questions = [
 
 // --- Профілі кави ---
 const coffeeProfiles = [
-  { name: "Ethiopia Gedeb 250g", img: "images/ethiopia_gadeb.png", link: "https://bfc24.com/uk/store/product/43", tags: { fruit: 2, filter: 3, americano: 1 }, category: "filter" },
-  { name: "Kenya AA Gikanda Kangocho 250g", img: "images/kenya_aa.png", link: "https://bfc24.com/uk/store/product/39", tags: { fruit: 2, filter: 3, americano: 1 }, category: "filter" },
-  { name: "Brazil Mogiana 250g", img: "images/brazil_mogiana.png", link: "https://bfc24.com/uk/store/product/33", tags: { choco: 2, espresso: 3, milk: 2, cappuccino: 2, moka: 1 } },
-  { name: "Colombia Excelso 250g", img: "images/colombia_excleso.png", link: "https://bfc24.com/uk/store/product/35", tags: { choco: 2, espresso: 2, milk: 1, moka: 1 } },
-  { name: "Arabica Midday 250g", img: "images/midday.png", link: "https://bfc24.com/uk/store/product/45", tags: { dessert: 2, espresso: 2, milk: 2, cappuccino: 2, moka: 1 } },
-  { name: "Arabica Midnight 250g", img: "images/midnight.png", link: "https://bfc24.com/uk/store/product/31", tags: { choco: 1, dessert: 2, espresso: 2, americano: 1, immersion: 1 } },
-  { name: "Arabica Sunrise 250g", img: "images/sunrise.png", link: "https://bfc24.com/uk/store/product/36", tags: { dessert: 2, espresso: 2, americano: 1, milk: 1, immersion: 1, moka: 1 } },
-  { name: "Arabusta Dark 250g", img: "images/dark.png", link: "https://bfc24.com/uk/store/product/29", tags: { dark: 3, espresso: 3, cappuccino: 2, moka: 2 } },
-  { name: "Arabusta Amber 250g", img: "images/amber.png", link: "https://bfc24.com/uk/store/product/30", tags: { dark: 2, espresso: 2, milk: 2, cappuccino: 2, americano: 1, moka: 1 } },
-  { name: "Decaf Colombia Huila 250g", img: "images/columbia_decaf.png", link: "https://bfc24.com/uk/store/product/34", tags: { classic: 2, espresso: 2, milk: 1, cappuccino: 1, americano: 1, immersion: 1 } },
-  { name: "Ethiopia Aleta Wondo 250g", img: "images/ethiopia_aleta.png", link: "https://bfc24.com/uk/store/product/32", tags: { fruit: 2, filter: 2, espresso: 1 }, category: "filter" },
-  { name: "Brazil Fazenda Pedra Grande 250g", img: "images/brazil_fazenda.png", link: "https://bfc24.com/uk/store/product/41", tags: { choco: 2, espresso: 2, moka: 1 } },
-  { name: "Colombia Cauca Popayan 250g", img: "images/colombia_cauca.png", link: "https://bfc24.com/uk/store/product/40", tags: { choco: 2, fruit: 1, espresso: 2 } },
-  { name: "Mexico El Buho 250g", img: "images/mexico_el_buho.png", link: "https://bfc24.com/uk/store/product/38", tags: { choco: 1, dark: 1, espresso: 2, americano: 1 } }
+  { name: "Ethiopia Gedeb 250g", img: "images/ethiopia_gadeb.png", link: "https://bfc24.com/store/product/26", tags: { fruit: 2, filter: 3, americano: 1 }, category: "filter" },
+  { name: "Kenya AA Gikanda Kangocho 250g", img: "images/kenya_aa.png", link: "https://bfc24.com/store/product/27", tags: { fruit: 2, filter: 3, americano: 1 }, category: "filter" },
+  { name: "Brazil Mogiana 250g", img: "images/brazil_mogiana.png", link: "https://bfc24.com/store/product/21", tags: { choco: 2, espresso: 3, milk: 2, cappuccino: 2, moka: 1 } },
+  { name: "Colombia Excelso 250g", img: "images/colombia_excleso.png", link: "https://bfc24.com/store/product/12", tags: { choco: 2, espresso: 2, milk: 1, moka: 1 } },
+  { name: "Arabica Midday 250g", img: "images/midday.png", link: "https://bfc24.com/store/product/10", tags: { dessert: 2, espresso: 2, milk: 2, cappuccino: 2, moka: 1 } },
+  { name: "Arabica Midnight 250g", img: "images/midnight.png", link: "https://bfc24.com/store/product/6", tags: { choco: 1, dessert: 2, espresso: 2, americano: 1, immersion: 1 } },
+  { name: "Arabica Sunrise 250g", img: "images/sunrise.png", link: "https://bfc24.com/store/product/9", tags: { dessert: 2, espresso: 2, americano: 1, milk: 1, immersion: 1, moka: 1 } },
+  { name: "Arabusta Dark 250g", img: "images/dark.png", link: "https://bfc24.com/store/product/4", tags: { dark: 3, espresso: 3, cappuccino: 2, moka: 2 } },
+  { name: "Arabusta Amber 250g", img: "images/amber.png", link: "https://bfc24.com/store/product/5", tags: { dark: 2, espresso: 2, milk: 2, cappuccino: 2, americano: 1, moka: 1 } },
+  { name: "Decaf Colombia Huila 250g", img: "images/columbia_decaf.png", link: "https://bfc24.com/store/product/19", tags: { classic: 2, espresso: 2, milk: 1, cappuccino: 1, americano: 1, immersion: 1 } },
+  { name: "Ethiopia Aleta Wondo 250g", img: "images/ethiopia_aleta.png", link: "https://bfc24.com/store/product/19", tags: { fruit: 2, filter: 2, espresso: 1 }, category: "filter" },
+  { name: "Brazil Fazenda Pedra Grande 250g", img: "images/brazil_fazenda.png", link: "https://bfc24.com/store/product/23", tags: { choco: 2, espresso: 2, moka: 1 } },
+  { name: "Colombia Cauca Popayan 250g", img: "images/colombia_cauca.png", link: "https://bfc24.com/store/product/25", tags: { choco: 2, fruit: 1, espresso: 2 } },
+  { name: "Mexico El Buho 250g", img: "images/mexico_el_buho.png", link: "https://bfc24.com/store/product/22", tags: { choco: 1, dark: 1, espresso: 2, americano: 1 } }
 ];
 
 // --- Логіка ---
